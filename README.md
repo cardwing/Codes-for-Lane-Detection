@@ -18,6 +18,13 @@ To be released
 ### Tensorflow version of SCNN (single GPU)
 Working in progress (2018.10.23 ~ 2018.11.20)
 
+Progress:
+- Define network architecture
+- Load pre-trained weights
+- Define dataloader
+- Perform testing
+- Perform training
+
 ### Pytorch version of SCNN
 Working in progress
 
