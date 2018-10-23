@@ -16,7 +16,7 @@ To be released
 To be released
 
 ### Tensorflow version of SCNN
-Working in progress
+Working in progress (2018.10.23 ~ 2018.11.20)
 
 ### Pytorch version of SCNN
 Working in progress
