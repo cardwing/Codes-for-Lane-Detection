@@ -15,7 +15,7 @@ To be released
 ### Training
 To be released
 
-### Tensorflow version of SCNN
+### Tensorflow version of SCNN (single GPU)
 Working in progress (2018.10.23 ~ 2018.11.20)
 
 ### Pytorch version of SCNN
