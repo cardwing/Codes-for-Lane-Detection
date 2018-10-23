@@ -19,11 +19,11 @@ To be released
 Working in progress (2018.10.23 ~ 2018.11.20)
 
 Progress:
-- Define network architecture
-- Load pre-trained weights
-- Define dataloader
+- Define network architecture (VGG-16 (done) + message passing)
+- Load pre-trained weights (done)
+- Define dataloader (done)
 - Perform testing
-- Perform training
+- Perform training (done)
 
 ### Pytorch version of SCNN
 Working in progress
