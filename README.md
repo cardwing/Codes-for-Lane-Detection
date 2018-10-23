@@ -28,6 +28,9 @@ Progress:
 ### Pytorch version of SCNN
 Working in progress
 
+### Cite our paper
+Our paper working on lane detection will be available soon!
+
 ### Acknowledgement
 This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection)
 
