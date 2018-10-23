@@ -25,6 +25,10 @@ Progress:
 - Perform testing
 - Perform training (done)
 
+### Tensorflow version of SCNN (multiple GPUs)
+
+Based on Tensorflow version of SCNN (single GPU)
+
 ### Pytorch version of SCNN
 Working in progress
 
