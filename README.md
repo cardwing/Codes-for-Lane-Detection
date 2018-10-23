@@ -16,7 +16,7 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 
 ### Acknowledgement
-This repo is built upon [SCNN](https://github.com/XingangPan/SCNN)
+This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection)
 
 ### Contact
 If you have any problems in reproducing the results, just raise an issue in this repo.
