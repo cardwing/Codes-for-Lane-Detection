@@ -6,6 +6,8 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 ### Prerequisites
 - [Torch](http://torch.ch/docs/getting-started.html)
+- [Tensorflow](https://www.tensorflow.org/)
+- [Pytorch](https://pytorch.org/)
 
 ### Testing
 
@@ -15,3 +17,6 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 ### Acknowledgement
 This repo is built upon [SCNN](https://github.com/XingangPan/SCNN)
+
+### Contact
+If you have any problems in reproducing the results, just raise an issue in this repo.
