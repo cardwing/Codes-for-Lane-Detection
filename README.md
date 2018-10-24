@@ -9,28 +9,29 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 - [Tensorflow](https://www.tensorflow.org/)
 - [Pytorch](https://pytorch.org/)
 
-### Testing
-To be released
-
-### Training
-To be released
-
-### Tensorflow version of SCNN (single GPU)
+### Tensorflow version of SCNN
 Working in progress (2018.10.23 ~ 2018.11.20)
 
 Progress:
 - [ ] Define network architecture (VGG-16 (done) + message passing)
 - [x] Load pre-trained weights
-- [ ] Define dataloader (load images and labels (done) + data augmentation )
+- [ ] Define dataloader (load images and labels (done) + data augmentation)
 - [ ] Perform testing (generate probability maps + smoothing)
-- [ ] Perform training (cross entropy loss and sigmoid loss (done) + validation )
-
-### Tensorflow version of SCNN (multiple GPUs)
-
-Based on Tensorflow version of SCNN (single GPU)
+- [ ] Perform training (cross entropy loss and sigmoid loss (done) + validation)
+- [ ] using multiple GPUs
+- [ ] clean the code and make them reproducible
 
 ### Pytorch version of SCNN
-Working in progress
+Working in progress (2018.10.23 ~ 2018.11.20)
+
+Progress:
+- [ ] Define network architecture (VGG-16 + message passing)
+- [ ] Load pre-trained weights
+- [ ] Define dataloader (load images and labels + data augmentation)
+- [ ] Perform testing (generate probability maps + smoothing)
+- [ ] Perform training (cross entropy loss and sigmoid loss + validation)
+- [ ] using multiple GPUs
+- [ ] clean the code and make them reproducible
 
 ### Cite our paper
 Our paper working on lane detection will be available soon!
