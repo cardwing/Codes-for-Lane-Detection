@@ -20,6 +20,10 @@ Progress:
 - [ ] using multiple GPUs
 - [ ] clean the code and make them reproducible
 
+Notes:
+
+Please go to the [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) repo to see detailed instructions
+
 ### Pytorch version of SCNN
 
 Progress:
