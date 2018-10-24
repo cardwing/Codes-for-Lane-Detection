@@ -2,7 +2,7 @@
 Tensorflow version of SCNN. (expected release date: 2018.11.20)
 
 ### Timeline
-Tensorflow version of SCNN is writing in progress.
+Tensorflow version of SCNN is writing in progress. I will clean the codes and make them readable soon!
 
 ### Prerequisites
 - [Tensorflow](https://www.tensorflow.org/)
@@ -13,23 +13,16 @@ Tensorflow version of SCNN is writing in progress.
     pip install --upgrade tensorflow-gpu==1.3.0
 
 ### Testing
-To be released
+    cd lane-detection-model
+    CUDA_VISIBLE_DEVICES="0" python tools/test_lanenet.py 
 
 ### Training
-To be released
+    cd lane-detection-model
+    CUDA_VISIBLE_DEVICES="0" python tools/train_lanenet.py --net vgg --dataset_dir /path/to/CULane-dataset/
 
 ### Tensorflow version of SCNN (single GPU)
-Working in progress (2018.10.23 ~ 2018.11.20)
+Working in progress (2018.10.23 ~ 2018.11.20), multiple GPU version will be available soon!
 
-Progress:
-- Define network architecture (VGG-16 (done) + message passing)
-- Load pre-trained weights (done)
-- Define dataloader (done)
-- Perform testing
-- Perform training (done)
-
-### Pytorch version of SCNN
-Working in progress
 
 ### Acknowledgement
 This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection)
