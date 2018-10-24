@@ -12,7 +12,7 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 ### Tensorflow version of SCNN
 
 Progress:
-- [ ] Define network architecture (VGG-16 (done) + message passing)
+- [x] Define network architecture (VGG-16 (done) + message passing (done))
 - [x] Load pre-trained weights
 - [ ] Define dataloader (load images and labels (done) + data augmentation)
 - [ ] Testing (generate probability maps + smoothing)
