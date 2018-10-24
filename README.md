@@ -9,7 +9,7 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 - [Tensorflow](https://www.tensorflow.org/)
 - [Pytorch](https://pytorch.org/)
 
-### Tensorflow version of SCNN (please do not use it until I have tested the whole training and testing process)
+### Tensorflow version of SCNN (please do not use it until I have fully tested it)
 
 Progress:
 - [x] Define network architecture

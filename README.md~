@@ -9,7 +9,7 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 - [Tensorflow](https://www.tensorflow.org/)
 - [Pytorch](https://pytorch.org/)
 
-### Tensorflow version of SCNN
+### Tensorflow version of SCNN (please do not use it until I have tested the whole training and testing process)
 
 Progress:
 - [x] Define network architecture
@@ -22,7 +22,7 @@ Progress:
 
 Notes:
 
-Please go to the [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) repo to see detailed instructions
+Please go to the [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) repo to see detailed instructions. 
 
 ### Pytorch version of SCNN
 
