@@ -15,7 +15,7 @@ Progress:
 - [x] Define network architecture
 - [x] Load pre-trained weights
 - [x] Define dataloader (data augmentation [on-going])
-- [ ] Testing (generate probability maps + smoothing)
+- [x] Testing (generate probability maps + smoothing)
 - [x] Training (validation [on-going])
 - [ ] using multiple GPUs
 - [ ] clean the code and make them reproducible
