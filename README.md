@@ -15,8 +15,8 @@ Progress:
 - [ ] Define network architecture (VGG-16 (done) + message passing)
 - [x] Load pre-trained weights
 - [ ] Define dataloader (load images and labels (done) + data augmentation)
-- [ ] Perform testing (generate probability maps + smoothing)
-- [ ] Perform training (cross entropy loss and sigmoid loss (done) + validation)
+- [ ] Testing (generate probability maps + smoothing)
+- [ ] Training (cross entropy loss and sigmoid loss (done) + validation)
 - [ ] using multiple GPUs
 - [ ] clean the code and make them reproducible
 
@@ -26,8 +26,8 @@ Progress:
 - [ ] Define network architecture (VGG-16 + message passing)
 - [ ] Load pre-trained weights
 - [ ] Define dataloader (load images and labels + data augmentation)
-- [ ] Perform testing (generate probability maps + smoothing)
-- [ ] Perform training (cross entropy loss and sigmoid loss + validation)
+- [ ] Testing (generate probability maps + smoothing)
+- [ ] Training (cross entropy loss and sigmoid loss + validation)
 - [ ] using multiple GPUs
 - [ ] clean the code and make them reproducible
 

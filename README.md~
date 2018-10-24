@@ -10,7 +10,6 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 - [Pytorch](https://pytorch.org/)
 
 ### Tensorflow version of SCNN
-Working in progress (2018.10.23 ~ 2018.11.20)
 
 Progress:
 - [ ] Define network architecture (VGG-16 (done) + message passing)
@@ -22,7 +21,6 @@ Progress:
 - [ ] clean the code and make them reproducible
 
 ### Pytorch version of SCNN
-Working in progress (2018.10.23 ~ 2018.11.20)
 
 Progress:
 - [ ] Define network architecture (VGG-16 + message passing)
