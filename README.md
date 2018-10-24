@@ -22,8 +22,8 @@ Progress:
 - Define network architecture (VGG-16 (done) + message passing)
 - Load pre-trained weights (done)
 - Define dataloader (done)
-- Perform testing
-- Perform training (done)
+- Perform testing (generate probability maps + smoothing)
+- Perform training (cross entropy loss and sigmoid loss (done) + data augmentation)
 
 ### Tensorflow version of SCNN (multiple GPUs)
 

@@ -23,11 +23,11 @@ Progress:
 - Load pre-trained weights (done)
 - Define dataloader (done)
 - Perform testing
-- Perform training (done)
+- Perform training (cross entropy loss and sigmoid loss (done) + data augmentation)
 
 ### Tensorflow version of SCNN (multiple GPUs)
 
-
+Based on Tensorflow version of SCNN (single GPU)
 
 ### Pytorch version of SCNN
 Working in progress
