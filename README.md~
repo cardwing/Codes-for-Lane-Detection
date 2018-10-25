@@ -9,8 +9,8 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 * [Prerequisites](#Prerequisites)
 * [Models](#Models)
-  * [SCNN(Tensorflow)](#SCNN(Tensorflow))
-  * [SCNN(Pytorch)](#SCNN(Pytorch))
+  * [SCNN-Tensorflow](#SCNN-Tensorflow)
+  * [SCNN-Pytorch](#SCNN-Pytorch)
 * [Others](#Others)
   * [Citation](#Citation)
   * [Acknowledgement](#Acknowledgement)
@@ -23,9 +23,9 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 ## Models
 
-### SCNN(Tensorflow)
+### SCNN-Tensorflow
 
-Progress:
+Progress (on-going):
 - [x] Define network architecture
 - [x] Load pre-trained weights
 - [x] Define dataloader (data augmentation [on-going])
@@ -39,7 +39,7 @@ Notes:
 
 Please go to the [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) repo to see detailed instructions. 
 
-### SCNN(Pytorch)
+### SCNN-Pytorch
 
 Progress:
 - [ ] Define network architecture (VGG-16 + message passing)

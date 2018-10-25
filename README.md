@@ -25,7 +25,7 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 ### SCNN-Tensorflow
 
-Progress:
+Progress (on-going):
 - [x] Define network architecture
 - [x] Load pre-trained weights
 - [x] Define dataloader (data augmentation [on-going])
@@ -41,7 +41,7 @@ Please go to the [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-De
 
 ### SCNN-Pytorch
 
-Progress:
+Progress (on-going):
 - [ ] Define network architecture (VGG-16 + message passing)
 - [ ] Load pre-trained weights
 - [ ] Define dataloader (load images and labels + data augmentation)
