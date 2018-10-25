@@ -17,7 +17,7 @@ Progress:
 - [x] Define dataloader (data augmentation [on-going])
 - [x] Testing (generate probability maps + smoothing)
 - [x] Training
-- [ ] validation
+- [x] validation
 - [ ] using multiple GPUs
 - [ ] clean the code and make them reproducible
 
