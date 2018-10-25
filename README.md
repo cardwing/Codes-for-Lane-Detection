@@ -11,8 +11,8 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 * [Models](#Models)
   * [SCNN (Tensorflow)](#SCNN (Tensorflow, on-going))
   * [SCNN (Pytorch)](#SCNN (Pytorch, on-going))
-* [Other Info](#Other Info)
-  * [Citation](#Citation))
+* [Others](#Others)
+  * [Citation](#Citation)
   * [Acknowledgement](#Acknowledgement)
   * [Contact](#Contact)
 
@@ -51,12 +51,13 @@ Progress:
 - [ ] using multiple GPUs
 - [ ] clean the codes and make them reproducible
 
-## Other Info
+## Others
 
 ### Citation
 
 If you use the codes, please cite the following publications:
 
+``` 
 @inproceedings{pan2018SCNN,  
   author = {Xingang Pan, Jianping Shi, Ping Luo, Xiaogang Wang, and Xiaoou Tang},  
   title = {Spatial As Deep: Spatial CNN for Traffic Scene Understanding},  
@@ -64,7 +65,7 @@ If you use the codes, please cite the following publications:
   month = {February},  
   year = {2018}  
 }
-
+```
 Our paper working on lane detection will be available soon!
 
 ### Acknowledgement
