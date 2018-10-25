@@ -1,5 +1,5 @@
 # Codes-for-Lane-Detection
-Codes for the CNN-based lane detection models. (expected release date: 2018.11.20)
+Codes for the CNN-based lane detection models. (expected release date: 2018.11.20, working in progress)
 
 ### Timeline
 I will release the torch code in 2018.11.20. Tensorflow and pytorch version of the model will be released thereafter.
@@ -19,7 +19,7 @@ Progress:
 - [x] Training
 - [x] validation
 - [ ] using multiple GPUs
-- [ ] clean the code and make them reproducible
+- [ ] clean the codes and make them reproducible
 
 Notes:
 
@@ -35,7 +35,7 @@ Progress:
 - [ ] Training
 - [ ] validation
 - [ ] using multiple GPUs
-- [ ] clean the code and make them reproducible
+- [ ] clean the codes and make them reproducible
 
 ### Cite our paper
 Our paper working on lane detection will be available soon!
