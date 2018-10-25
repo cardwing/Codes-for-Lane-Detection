@@ -1,21 +1,35 @@
 # Codes-for-Lane-Detection
 Codes for the CNN-based lane detection models. (expected release date: 2018.11.20)
 
-### Timeline
+## Timeline
+
 I will release the torch code in 2018.11.20. Tensorflow and pytorch version of the model will be released thereafter.
 
-### Prerequisites
+## Content
+
+* [Prerequisites](#Prerequisites)
+* [Models](#Models)
+  * [SCNN (Tensorflow)](#SCNN (Tensorflow, on-going))
+  * [SCNN (Pytorch)](#SCNN (Pytorch, on-going))
+* [Other Info](#Other Info)
+  * [Citation](#Citation))
+  * [Acknowledgement](#Acknowledgement)
+  * [Contact](#Contact)
+
+## Prerequisites
 - [Torch](http://torch.ch/docs/getting-started.html)
 - [Tensorflow](https://www.tensorflow.org/)
 - [Pytorch](https://pytorch.org/)
 
-### Tensorflow version of SCNN (please do not use it until I have fully tested it)
+## Models
+
+### SCNN (Tensorflow, on-going)
 
 Progress:
 - [x] Define network architecture
 - [x] Load pre-trained weights
 - [x] Define dataloader (data augmentation [on-going])
-- [x] Testing (generate probability maps + smoothing)
+- [x] Testing
 - [x] Training
 - [x] validation
 - [ ] using multiple GPUs
@@ -25,7 +39,7 @@ Notes:
 
 Please go to the [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) repo to see detailed instructions. 
 
-### Pytorch version of SCNN
+### SCNN (Pytorch, on-going)
 
 Progress:
 - [ ] Define network architecture (VGG-16 + message passing)
@@ -37,7 +51,20 @@ Progress:
 - [ ] using multiple GPUs
 - [ ] clean the codes and make them reproducible
 
-### Cite our paper
+## Other Info
+
+### Citation
+
+If you use the codes, please cite the following publications.
+
+@inproceedings{pan2018SCNN,  
+  author = {Xingang Pan, Jianping Shi, Ping Luo, Xiaogang Wang, and Xiaoou Tang},  
+  title = {Spatial As Deep: Spatial CNN for Traffic Scene Understanding},  
+  booktitle = {AAAI Conference on Artificial Intelligence (AAAI)},  
+  month = {February},  
+  year = {2018}  
+}
+
 Our paper working on lane detection will be available soon!
 
 ### Acknowledgement
