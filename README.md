@@ -16,7 +16,8 @@ Progress:
 - [x] Load pre-trained weights
 - [x] Define dataloader (data augmentation [on-going])
 - [x] Testing (generate probability maps + smoothing)
-- [x] Training (validation [on-going])
+- [x] Training
+- [ ] validation
 - [ ] using multiple GPUs
 - [ ] clean the code and make them reproducible
 
@@ -31,7 +32,8 @@ Progress:
 - [ ] Load pre-trained weights
 - [ ] Define dataloader (load images and labels + data augmentation)
 - [ ] Testing (generate probability maps + smoothing)
-- [ ] Training (cross entropy loss and sigmoid loss + validation)
+- [ ] Training
+- [ ] validation
 - [ ] using multiple GPUs
 - [ ] clean the code and make them reproducible
 
