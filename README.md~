@@ -9,8 +9,8 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 * [Prerequisites](#Prerequisites)
 * [Models](#Models)
-  * [SCNN (Tensorflow)](#SCNN (Tensorflow, on-going))
-  * [SCNN (Pytorch)](#SCNN (Pytorch, on-going))
+  * [SCNN (Tensorflow, on-going)](#SCNN (Tensorflow, on-going))
+  * [SCNN (Pytorch, on-going)](#SCNN (Pytorch, on-going))
 * [Others](#Others)
   * [Citation](#Citation)
   * [Acknowledgement](#Acknowledgement)
