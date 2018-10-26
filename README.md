@@ -11,6 +11,9 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 * [Models](#Models)
   * [SCNN-Tensorflow](#SCNN-Tensorflow)
   * [SCNN-Pytorch](#SCNN-Pytorch)
+* [Datasets](#Datasets)
+  * [TuSimple](#TuSimple)
+  * [CULane](#CULane)
 * [Others](#Others)
   * [Citation](#Citation)
   * [Acknowledgement](#Acknowledgement)
@@ -50,6 +53,16 @@ Progress (on-going):
 - [ ] validation
 - [ ] using multiple GPUs
 - [ ] clean the codes and make them reproducible
+
+## Datasets
+
+### TuSimple
+
+The ground-truth labels of TuSimple testing set is now available at [TuSimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). Please evaluate your pred.json using the labels and [this script](https://github.com/TuSimple/tusimple-benchmark/blob/master/evaluate/lane.py).
+
+### CULane
+
+The whole dataset is available at [CULane](https://xingangpan.github.io/projects/CULane.html).
 
 ## Others
 
