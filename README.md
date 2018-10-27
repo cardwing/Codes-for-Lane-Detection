@@ -26,6 +26,21 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 ## Models
 
+Preliminary results (F1-measure):
+
+|Category|[SCNN-torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-tensorflow|SCNN-pytorch|
+|:---:|:---:|:---:|:---:|
+|Normal|90.6|78.5|--|
+|Crowded|69.7|56.9|--|
+|Night|66.1|49.9|--|
+|No line|43.4|34.3|--|
+|Shadow|66.9|46.5|--|
+|Arrow|84.1|66.9|--|
+|Dazzle light|58.5|46.2|--|
+|Curve|64.4|51.0|--|
+|Crossroad|1990|5468|--|
+|Total|71.6|57.5|--|
+
 ### SCNN-Tensorflow
 
 Progress (**on-going, debug**):
@@ -37,21 +52,6 @@ Progress (**on-going, debug**):
 - [x] validation
 - [ ] using multiple GPUs
 - [ ] clean the codes and make them reproducible
-
-Preliminary results (F1-measure):
-
-|Category|[SCNN-torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-tensorflow|
-|:---:|:---:|:---:|
-|Normal|90.6|78.5|
-|Crowded|69.7|56.9|
-|Night|66.1|49.9|
-|No line|43.4|34.3|
-|Shadow|66.9|46.5|
-|Arrow|84.1|66.9|
-|Dazzle light|58.5|46.2|
-|Curve|64.4|51.0|
-|Crossroad|1990|5468|
-|Total|71.6|57.5|
 
 Notes:
 
