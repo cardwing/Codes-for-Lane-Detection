@@ -26,7 +26,7 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 ## Models
 
-Preliminary results (F1-measure):
+Preliminary results on CULane testing set (F1-measure):
 
 |Category|[SCNN-torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-tensorflow|SCNN-pytorch|
 |:---:|:---:|:---:|:---:|
