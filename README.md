@@ -44,14 +44,14 @@ Preliminary results (F1-measure):
 |:---:|:---:|:---:|
 |Normal|90.6|78.5|
 |Crowded|69.7|56.9|
-|Night|66.1|--|
+|Night|66.1|49.9|
 |No line|43.4|34.3|
 |Shadow|66.9|46.5|
 |Arrow|84.1|66.9|
 |Dazzle light|58.5|46.2|
 |Curve|64.4|51.0|
 |Crossroad|1990|5468|
-|Total|71.6|--|
+|Total|71.6|57.5|
 
 Notes:
 
