@@ -28,7 +28,7 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 
 ### SCNN-Tensorflow
 
-Progress (on-going):
+Progress (on-going, debug):
 - [x] Define network architecture
 - [x] Load pre-trained weights
 - [x] Define dataloader (data augmentation [on-going])

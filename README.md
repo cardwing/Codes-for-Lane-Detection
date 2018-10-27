@@ -40,7 +40,7 @@ Progress (on-going, debug):
 
 Preliminary results (F1-measure):
 
-|Category|SCNN-torch|SCNN-tensorflow|
+|Category|[SCNN-torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-tensorflow|
 |:---:|:---:|:---:|
 |Normal|90.6|78.5|
 |Crowded|69.7|56.9|
