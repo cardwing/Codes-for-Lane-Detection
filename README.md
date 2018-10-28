@@ -53,6 +53,10 @@ Progress (**on-going, debug**):
 - [ ] using multiple GPUs
 - [ ] clean the codes and make them reproducible
 
+Observations:
+
+FP is big. The output of the lane existence prediction branch is always `(1, 1, 1, 1)`.
+
 Notes:
 
 Please go to the [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) repo to see detailed instructions. 
