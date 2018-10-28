@@ -30,7 +30,7 @@ Preliminary results on CULane testing set (F1-measure):
 
 |Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|SCNN-Pytorch|
 |:---:|:---:|:---:|:---:|
-|Normal|90.6|78.5|--|
+|Normal|90.6|80.0|--|
 |Crowded|69.7|56.9|--|
 |Night|66.1|49.9|--|
 |No line|43.4|34.3|--|
@@ -39,7 +39,7 @@ Preliminary results on CULane testing set (F1-measure):
 |Dazzle light|58.5|46.2|--|
 |Curve|64.4|51.0|--|
 |Crossroad|1990|5468|--|
-|Total|71.6|57.5|--|
+|Total|71.6|58.7|--|
 
 ### SCNN-Tensorflow
 
@@ -55,7 +55,7 @@ Progress (**on-going, debug**):
 
 Observations:
 
-FP is big.
+FP is big. The output of the lane existence prediction branch is always `(1, 1, 1, 1)`.
 
 Notes:
 
