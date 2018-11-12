@@ -95,7 +95,7 @@ The whole dataset is available at [CULane](https://xingangpan.github.io/projects
 
 ### BDD100K
 
-The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/)
+The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
 
 ## Others
 
