@@ -15,6 +15,7 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
 * [Models](#Models)
   * [SCNN-Tensorflow](#SCNN-Tensorflow)
   * [SCNN-Pytorch](#SCNN-Pytorch)
+  * [Our-Model](#Our-Model)
 * [Datasets](#Datasets)
   * [TuSimple](#TuSimple)
   * [CULane](#CULane)
@@ -76,6 +77,10 @@ Progress (on-going):
 - [ ] validation
 - [ ] using multiple GPUs
 - [ ] clean the codes and make them reproducible
+
+### Our-Model
+
+Coming soon.
 
 ## Datasets
 
