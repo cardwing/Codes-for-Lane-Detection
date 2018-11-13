@@ -89,17 +89,25 @@ Coming soon.
 
 The ground-truth labels of TuSimple testing set is now available at [TuSimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). Please evaluate your pred.json using the labels and [this script](https://github.com/TuSimple/tusimple-benchmark/blob/master/evaluate/lane.py).
 
-#### Detailed instructions
+#### Testing
 
-
+#### Training
 
 ### CULane
 
 The whole dataset is available at [CULane](https://xingangpan.github.io/projects/CULane.html).
 
+#### Testing
+
+#### Training
+
 ### BDD100K
 
 The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
+
+#### Testing
+
+#### Training
 
 ## Others
 
