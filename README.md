@@ -65,7 +65,7 @@ FP is big. The output of the lane existence prediction branch is always `(1, 1, 
 
 Notes:
 
-Please go to the [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) repo to see detailed instructions. 
+Please go to [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) to see detailed instructions. 
 
 ### SCNN-Pytorch
 
