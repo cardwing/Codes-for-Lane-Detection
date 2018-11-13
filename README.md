@@ -1,15 +1,15 @@
 # Codes-for-Lane-Detection
 Codes for the CNN-based lane detection models. (expected release date: 2018.11.20)
 
-## Important notes
+# Important notes
 
 Currently, I am debuging the codes of SCNN-Tensorflow. I will clean the repo and post detailed instructions here after  debuging.
 
-## Timeline
+# Timeline
 
 I will release the torch code in 2018.11.20. Tensorflow and pytorch version of the model will be released thereafter.
 
-## Content
+# Content
 
 * [Prerequisites](#Prerequisites)
 * [Models](#Models)
@@ -25,12 +25,12 @@ I will release the torch code in 2018.11.20. Tensorflow and pytorch version of t
   * [Acknowledgement](#Acknowledgement)
   * [Contact](#Contact)
 
-## Prerequisites
+# Prerequisites
 - [Torch](http://torch.ch/docs/getting-started.html)
 - [Tensorflow](https://www.tensorflow.org/)
 - [Pytorch](https://pytorch.org/)
 
-## Models
+# Models
 
 Preliminary results on CULane testing set (F1-measure):
 
@@ -47,7 +47,7 @@ Preliminary results on CULane testing set (F1-measure):
 |Crossroad|1990|4480|--|
 |Total|71.6|58.7|--|
 
-### SCNN-Tensorflow
+## SCNN-Tensorflow
 
 Progress (**on-going, debug**):
 - [x] Define network architecture
@@ -67,7 +67,7 @@ Notes:
 
 Please go to [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) to see detailed instructions. 
 
-### SCNN-Pytorch
+## SCNN-Pytorch
 
 Progress (on-going):
 - [ ] Define network architecture (VGG-16 + message passing)
@@ -79,39 +79,39 @@ Progress (on-going):
 - [ ] using multiple GPUs
 - [ ] clean the codes and make them reproducible
 
-### Our-Model
+## Our-Model
 
 Coming soon.
 
-## Datasets
+# Datasets
 
-### TuSimple
+## TuSimple
 
 The ground-truth labels of TuSimple testing set is now available at [TuSimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). Please evaluate your pred.json using the labels and [this script](https://github.com/TuSimple/tusimple-benchmark/blob/master/evaluate/lane.py).
 
-#### Testing
+### Testing
 
-#### Training
+### Training
 
-### CULane
+## CULane
 
 The whole dataset is available at [CULane](https://xingangpan.github.io/projects/CULane.html).
 
-#### Testing
+### Testing
 
-#### Training
+### Training
 
-### BDD100K
+## BDD100K
 
 The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
 
-#### Testing
+### Testing
 
-#### Training
+### Training
 
-## Others
+# Others
 
-### Citation
+## Citation
 
 If you use the codes, please cite the following publications:
 
@@ -126,8 +126,8 @@ If you use the codes, please cite the following publications:
 ```
 Our paper working on lane detection will be available soon!
 
-### Acknowledgement
+## Acknowledgement
 This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection)
 
-### Contact
+## Contact
 If you have any problems in reproducing the results, just raise an issue in this repo.
