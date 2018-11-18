@@ -2,7 +2,7 @@ Codes for the CNN-based lane detection models. (expected release date: 2018.11.2
 
 # Important notes
 
-Currently, I am debuging the codes of SCNN-Tensorflow. I will clean the repo and post detailed instructions here after  debuging.
+Currently, I am debuging the codes of SCNN-Tensorflow (2018.11.18). I will clean the repo and post detailed instructions here after debuging.
 
 # Timeline
 
