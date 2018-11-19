@@ -6,7 +6,7 @@ Currently, I am debuging the codes of SCNN-Tensorflow (2018.11.18). I will clean
 
 # Timeline
 
-I will release the torch code in 2018.11.20. Tensorflow and pytorch version of the model will be released thereafter.
+I will release the torch code in 2018.11.20 (on-going). Tensorflow and pytorch version of the model will be released thereafter (on-going).
 
 # Content
 
