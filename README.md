@@ -1,4 +1,4 @@
-Codes for the CNN-based lane detection models. (working in progress)
+Codes for the CNN-based lane detection models. (on-going)
 
 # Important notes (Please do not use the code since there are bugs in it and full codes are not uploaded)
 
