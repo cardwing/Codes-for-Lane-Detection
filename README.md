@@ -1,4 +1,4 @@
-Codes for the CNN-based lane detection models. (expected release date: 2018.11.20)
+Codes for the CNN-based lane detection models. (working in progress)
 
 # Important notes
 
