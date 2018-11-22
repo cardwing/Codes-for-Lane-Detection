@@ -60,7 +60,7 @@ Progress (**on-going, debug**):
 
 Observations:
 
-FP is big. The output of the lane existence prediction branch is always `(1, 1, 1, 1)`.
+FP is big. The loss of the lane existence prediction branch is abnormal.
 
 Notes:
 
