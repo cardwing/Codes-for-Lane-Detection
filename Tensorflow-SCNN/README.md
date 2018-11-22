@@ -20,9 +20,6 @@ Tensorflow version of SCNN is writing in progress. I will clean the codes and ma
     cd lane-detection-model
     CUDA_VISIBLE_DEVICES="0" python tools/train_lanenet.py --net vgg --dataset_dir /path/to/CULane-dataset/
 
-### Tensorflow version of SCNN (single GPU)
-Working in progress (2018.10.23 ~ 2018.11.20), multiple GPU version will be available soon!
-
 
 ### Acknowledgement
 This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection)
