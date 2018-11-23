@@ -62,6 +62,10 @@ Observations:
 
 FP is big. The loss of the lane existence prediction branch is abnormal.
 
+Update:
+
+Bugs found. The softmax function is wrongly used.
+
 Notes:
 
 Please go to [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) to see detailed instructions. 
