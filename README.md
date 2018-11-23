@@ -58,13 +58,9 @@ Progress (**on-going, debug**):
 - [ ] using multiple GPUs
 - [ ] clean the codes and make them reproducible
 
-Observations:
-
-FP is big. The loss of the lane existence prediction branch is abnormal.
-
 Update:
 
-Bugs found. The softmax function is wrongly used.
+Bugs found. The softmax function is wrongly used. Retraining the model now.
 
 Notes:
 
