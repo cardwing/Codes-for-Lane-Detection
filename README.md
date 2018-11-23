@@ -48,7 +48,7 @@ Preliminary results on CULane testing set (F1-measure):
 
 ## SCNN-Tensorflow
 
-Progress (**on-going, debug**):
+Progress (**on-going**):
 - [x] Define network architecture
 - [x] Load pre-trained weights
 - [x] Define dataloader (data augmentation [on-going])
