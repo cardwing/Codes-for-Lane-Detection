@@ -1,8 +1,8 @@
 Codes for the CNN-based lane detection models.
 
-# Important notes (Retraining)
+# Important notes 
 
-Currently, I am debuging the codes of SCNN-Tensorflow. I will clean the repo and post detailed instructions here after debuging.
+Currently, I am writing the codes of SCNN-Tensorflow (bugs found). I will clean the repo and post detailed instructions here after debuging.
 
 # Timeline
 
