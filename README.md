@@ -46,7 +46,7 @@ Preliminary results on CULane testing set (F1-measure):
 
 Update:
 
-Testing the performance now.
+Testing the performance now. (Debugging)
 
 Notes:
 
