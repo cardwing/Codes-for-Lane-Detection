@@ -6,7 +6,7 @@ Codes of SCNN-Tensorflow are written. I will clean the repo and post detailed in
 
 # Timeline
 
-1. [SCNN-Tensorflow](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) is released. (2018-11-24)
+- [SCNN-Tensorflow](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) is released. (2018-11-24)
 
 # Content
 
