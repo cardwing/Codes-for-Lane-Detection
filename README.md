@@ -44,15 +44,6 @@ Preliminary results on CULane testing set (F1-measure):
 
 ## SCNN-Tensorflow
 
-Progress (**done**):
-- [x] Define network architecture
-- [x] Load pre-trained weights
-- [x] Define dataloader (data augmentation [on-going])
-- [x] Testing
-- [x] Training
-- [x] validation
-- [x] clean the codes and make them reproducible
-
 Update:
 
 Testing the performance now.
