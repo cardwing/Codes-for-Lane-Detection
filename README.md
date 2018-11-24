@@ -56,11 +56,11 @@ Progress (**on-going**):
 - [x] Training
 - [x] validation
 - [ ] using multiple GPUs
-- [ ] clean the codes and make them reproducible
+- [x] clean the codes and make them reproducible
 
 Update:
 
-Bugs found. The softmax function is wrongly used. Retraining the model now.
+Testing the performance now.
 
 Notes:
 
