@@ -1,4 +1,4 @@
-Codes for CNN-based lane detection models.
+Codes for CNN-based lane detection models. (on-going)
 
 # Timeline
 
