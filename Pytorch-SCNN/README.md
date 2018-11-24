@@ -1,5 +1,5 @@
 # Pytorch-SCNN
-Pytorch version of SCNN. (expected release date: 2018.11.20)
+Pytorch version of SCNN. (on-going)
 
 ### Prerequisites
 - [Pytorch](https://pytorch.org/)
