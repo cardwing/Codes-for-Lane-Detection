@@ -2,11 +2,11 @@ Codes for the CNN-based lane detection models.
 
 # Important notes 
 
-Currently, I am writing the codes of SCNN-Tensorflow (bugs found). I will clean the repo and post detailed instructions here soon.
+Codes of SCNN-Tensorflow are written. I will clean the repo and post detailed instructions here soon.
 
 # Timeline
 
-I will release the torch code in 2018.11.20 (on-going). Tensorflow and pytorch version of the model will be released thereafter (on-going).
+I will release the torch code in 2018.11.20 (ready). Tensorflow and pytorch version of the model will be released thereafter (on-going).
 
 # Content
 
