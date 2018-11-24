@@ -1,9 +1,5 @@
 Codes for CNN-based lane detection models.
 
-# Important notes 
-
-Codes of SCNN-Tensorflow are written. I will clean the repo and post detailed instructions here.
-
 # Timeline
 
 - [SCNN-Tensorflow](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) is released. (2018-11-24)
