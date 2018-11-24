@@ -1,8 +1,8 @@
 # Tensorflow-SCNN
-Tensorflow version of SCNN. (expected release date: 2018.11.20)
+Tensorflow version of SCNN in CULane.
 
 ### Timeline
-Tensorflow version of SCNN is writing in progress. I will clean the codes and make them readable soon!
+Tensorflow version of SCNN is written. I will clean the codes and make them readable!
 
 ### Prerequisites
 - [Tensorflow](https://www.tensorflow.org/)
