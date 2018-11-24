@@ -1,4 +1,4 @@
-Codes for the CNN-based lane detection models.
+Codes for CNN-based lane detection models.
 
 # Important notes 
 
