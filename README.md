@@ -6,7 +6,7 @@ Codes of SCNN-Tensorflow are written. I will clean the repo and post detailed in
 
 # Timeline
 
-I will release the torch code in 2018.11.20 (ready). Tensorflow and pytorch version of the model will be released thereafter (on-going).
+[SCNN-Tensorflow](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) is released.
 
 # Content
 
