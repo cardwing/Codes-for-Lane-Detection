@@ -69,7 +69,11 @@ def test_lanenet(image_path, weights_path, use_gpu):
     net = lanenet_merge_model.LaneNet(phase=phase_tensor, net_flag='vgg')
     binary_seg_ret, instance_seg_ret = net.inference(input_tensor=input_tensor, name='lanenet_loss')
 
-    saver = tf.train.Saver()
+    initial_var = tf.global_variables()
+    # print(initial_var)
+    final_var = initial_var[:-1]
+
+    saver = tf.train.Saver(final_var)
 
     # Set sess configuration
     if use_gpu:
@@ -79,11 +83,12 @@ def test_lanenet(image_path, weights_path, use_gpu):
     sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.TEST.GPU_MEMORY_FRACTION
     sess_config.gpu_options.allow_growth = CFG.TRAIN.TF_ALLOW_GROWTH
     sess_config.gpu_options.allocator_type = 'BFC'
-    lanes_extra_file = open('lanes_file.txt', 'w')
 
     sess = tf.Session(config=sess_config)
 
     with sess.as_default():
+
+        sess.run(tf.global_variables_initializer())
 
         saver.restore(sess=sess, save_path=weights_path)
         for i in range(int(len(image_path) / 8)):
@@ -93,20 +98,32 @@ def test_lanenet(image_path, weights_path, use_gpu):
             gt_imgs = [cv2.resize(tmp,
                                   dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
                                   dst=tmp,
-                                  interpolation=cv2.INTER_LINEAR)
+                                  interpolation=cv2.INTER_CUBIC)
                        for tmp in gt_imgs]
-            gt_imgs = [tmp - VGG_MEAN for tmp in gt_imgs]
+            gt_imgs = [(tmp - VGG_MEAN) for tmp in gt_imgs]
 
             instance_seg_image, existence_output = sess.run([binary_seg_ret, instance_seg_ret],
                                                         feed_dict={input_tensor: gt_imgs})
-          
-            cv2.imwrite('test_img/' + str(i) + '_origin.png', gt_imgs[0])
-            cv2.imwrite('test_img/' + str(i) + '_ins.png', instance_seg_image[0] * 50)
-            print(np.unique(instance_seg_image[0]))
-            print(existence_output[0])
+
+            for cnt in range(8):
+                image_name = image_path[i * 8 + cnt]
+                image_prefix = image_name[:-10]
+                directory = 'predicts_SCNN_test_final/vgg_SCNN_DULR_w9' + image_prefix
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                file_exist = open(directory + image_name[-10:-4] + '.exist.txt', 'w')
+                for cnt_img in range(4):
+                    cv2.imwrite(directory + image_name[-10:-4] + '_' + str(cnt_img + 1) + '_avg.png', (instance_seg_image[cnt, :, :, cnt_img + 1] * 255).astype(int) )
+                  
+                    if existence_output[cnt, cnt_img] > 0.5:
+                        file_exist.write('1 ')
+                    else:
+                        file_exist.write('0 ')
+                    
+                file_exist.close()
                                  
     sess.close()
-    lanes_extra_file.close()
+    
 
     return
 
@@ -121,10 +138,9 @@ if __name__ == '__main__':
 
     img_name = []
     args.image_path = 'test_culane_img.txt'
-    args.weights_path = 'model/culane_lanenet/culane_scnn/culane_lanenet_vgg_2018-10-23-17-55-54.ckpt-2000'
+    args.weights_path = 'model/culane_lanenet/culane_scnn/culane_lanenet_vgg_2018-11-24-19-37-25.ckpt-73000'
     with open(str(args.image_path), 'r') as g:
         for line in g.readlines():
             img_name.append(line.strip())
 
     test_lanenet(img_name, args.weights_path, args.use_gpu)
-
