@@ -1,4 +1,4 @@
-Codes for CNN-based lane detection models. (Please raise an issue if you can not run the code of SCNN-Tensorflow)
+Codes for CNN-based lane detection models.
 
 # Timeline
 
