@@ -20,6 +20,8 @@ Download the pre-trained model here. (Coming soon!)
     cd lane-detection-model
     CUDA_VISIBLE_DEVICES="0" python tools/test_lanenet.py --weights_path path/to/model_weights_file --image_path path/to/image_name_list
 
+Note that path/to/image_name_list should be like [test_img.txt](./lane-detection-model/demo_file/test_img.txt).
+
 ## Train
     cd lane-detection-model
     CUDA_VISIBLE_DEVICES="0" python tools/train_lanenet.py --net vgg --dataset_dir path/to/CULane-dataset/
