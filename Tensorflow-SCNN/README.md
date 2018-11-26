@@ -24,7 +24,7 @@ Download the pre-trained model here. (Coming soon!)
     cd lane-detection-model
     CUDA_VISIBLE_DEVICES="0" python tools/train_lanenet.py --net vgg --dataset_dir path/to/CULane-dataset/
 
-Note that path/to/CULane-dataset/ should contain "train_gt.txt" and "val_gt.txt"
+Note that path/to/CULane-dataset/ should contain files like [train_gt.txt](./lane-detection-model/demo_file/train_gt.txt) and [val_gt.txt](./lane-detection-model/demo_file/train_gt.txt).
 
 ## Acknowledgement
 This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection)
