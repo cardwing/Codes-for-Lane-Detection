@@ -51,7 +51,7 @@ def init_args():
     return parser.parse_args()
 
 
-def test_lanenet(image_path, weights_path, use_gpu):
+def test_lanenet(image_path, weights_path, use_gpu, image_list):
     """
 
     :param image_path:
@@ -91,9 +91,8 @@ def test_lanenet(image_path, weights_path, use_gpu):
         sess.run(tf.global_variables_initializer())
 
         saver.restore(sess=sess, save_path=weights_path)
-        for i in range(int(len(image_path) / 8)):
+        for i in range(int(len(image_list) / 8)):
             print(i)
-
             gt_imgs = test_dataset.next_batch(CFG.TRAIN.BATCH_SIZE)
             gt_imgs = [cv2.resize(tmp,
                                   dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
@@ -106,15 +105,14 @@ def test_lanenet(image_path, weights_path, use_gpu):
                                                         feed_dict={input_tensor: gt_imgs})
 
             for cnt in range(8):
-                image_name = image_path[i * 8 + cnt]
+                image_name = image_list[i * 8 + cnt]
                 image_prefix = image_name[:-10]
                 directory = 'predicts_SCNN_test_final/vgg_SCNN_DULR_w9' + image_prefix
                 if not os.path.exists(directory):
                     os.makedirs(directory)
                 file_exist = open(directory + image_name[-10:-4] + '.exist.txt', 'w')
                 for cnt_img in range(4):
-                    cv2.imwrite(directory + image_name[-10:-4] + '_' + str(cnt_img + 1) + '_avg.png', (instance_seg_image[cnt, :, :, cnt_img + 1] * 255).astype(int) )
-                  
+                    cv2.imwrite(directory + image_name[-10:-4] + '_' + str(cnt_img + 1) + '_avg.png', (instance_seg_image[cnt, :, :, cnt_img + 1] * 255).astype(int) )                  
                     if existence_output[cnt, cnt_img] > 0.5:
                         file_exist.write('1 ')
                     else:
@@ -141,4 +139,4 @@ if __name__ == '__main__':
         for line in g.readlines():
             img_name.append(line.strip())
 
-    test_lanenet(img_name, args.weights_path, args.use_gpu)
+    test_lanenet(args.image_path, args.weights_path, args.use_gpu, image_name)
