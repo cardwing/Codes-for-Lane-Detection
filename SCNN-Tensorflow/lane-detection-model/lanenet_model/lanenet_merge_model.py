@@ -27,13 +27,7 @@ class LaneNet(cnn_basenet.CNNBaseModel):
         super(LaneNet, self).__init__()
         self._net_flag = net_flag
         self._phase = phase
-        if self._net_flag == 'vgg':
-            self._encoder = vgg_encoder.VGG16Encoder(phase=phase)
-        elif self._net_flag == 'dense':
-            self._encoder = dense_encoder.DenseEncoder(l=20, growthrate=8,
-                                                       with_bc=True,
-                                                       phase=self._phase,
-                                                       n=5)
+        self._encoder = vgg_encoder.VGG16Encoder(phase=phase)
         return
 
     def __str__(self):
@@ -89,9 +83,6 @@ class LaneNet(cnn_basenet.CNNBaseModel):
             weights_loss = tf.reduce_sum(tf.multiply(binary_label_reshape, class_weights), 2)
        
             binary_segmenatation_loss = tf.losses.softmax_cross_entropy(onehot_labels=binary_label_reshape, logits=decode_logits_reshape, weights=weights_loss)
-            # binary_segmenatation_loss = tf.nn.softmax_cross_entropy_with_logits(labels=binary_label_reshape, logits=decode_logits_reshape, name='entropy_loss')
-
-            # binary_segmenatation_loss = binary_segmenatation_loss * weights # weighted loss function
 
             binary_segmenatation_loss = tf.reduce_mean(binary_segmenatation_loss)
 
@@ -135,13 +126,8 @@ class LaneNet(cnn_basenet.CNNBaseModel):
             # Compute loss
 
             decode_logits = inference_ret['prob_output']
-            # print(decode_logits)
-
             binary_seg_ret = tf.nn.softmax(logits=decode_logits)
-
-            
             prob_list = []
-
             kernel = tf.get_variable('kernel', [9, 9, 1, 1], initializer=tf.constant_initializer(1.0/81), trainable=False)
 
             with tf.variable_scope("convs_smooth"):
@@ -154,10 +140,7 @@ class LaneNet(cnn_basenet.CNNBaseModel):
                     prob_list.append(prob_smooth)
             processed_prob = tf.stack(prob_list, axis=4)
             processed_prob = tf.squeeze(processed_prob)
-
-            binary_seg_ret = processed_prob # tf.nn.conv2d(tf.cast(binary_seg_ret, tf.float32), kernel, [1, 1, 1, 1], 'SAME')
-            
-            # binary_seg_ret = tf.argmax(binary_seg_ret, axis=-1)
+            binary_seg_ret = processed_prob
 
             # Predict lane existence:
             existence_logit = inference_ret['existence_output']
@@ -168,9 +151,9 @@ class LaneNet(cnn_basenet.CNNBaseModel):
 
 if __name__ == '__main__':
     model = LaneNet(tf.constant('train', dtype=tf.string))
-    input_tensor = tf.placeholder(dtype=tf.float32, shape=[1, 256, 512, 3], name='input')
-    binary_label = tf.placeholder(dtype=tf.int64, shape=[1, 256, 512, 1], name='label')
-    instance_label = tf.placeholder(dtype=tf.float32, shape=[1, 256, 512, 1], name='label')
+    input_tensor = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 3], name='input')
+    binary_label = tf.placeholder(dtype=tf.int64, shape=[8, 288, 800, 1], name='label')
+    instance_label = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 1], name='label')
     ret = model.compute_loss(input_tensor=input_tensor, binary_label=binary_label,
                              instance_label=instance_label, name='loss')
     print(ret['total_loss'])
