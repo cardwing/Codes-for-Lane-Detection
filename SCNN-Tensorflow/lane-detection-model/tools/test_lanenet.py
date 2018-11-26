@@ -70,7 +70,6 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size):
     binary_seg_ret, instance_seg_ret = net.inference(input_tensor=input_tensor, name='lanenet_loss')
 
     initial_var = tf.global_variables()
-    # print(initial_var)
     final_var = initial_var[:-1]
 
     saver = tf.train.Saver(final_var)
@@ -122,7 +121,6 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size):
                                  
     sess.close()
     
-
     return
 
 
