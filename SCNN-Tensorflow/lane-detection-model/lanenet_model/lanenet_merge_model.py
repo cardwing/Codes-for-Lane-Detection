@@ -153,7 +153,7 @@ if __name__ == '__main__':
     model = LaneNet(tf.constant('train', dtype=tf.string))
     input_tensor = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 3], name='input')
     binary_label = tf.placeholder(dtype=tf.int64, shape=[8, 288, 800, 1], name='label')
-    instance_label = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 1], name='label')
+    existence_label_tensor = tf.placeholder(dtype=tf.float32, shape=[8, 4], name='existence')
     ret = model.compute_loss(input_tensor=input_tensor, binary_label=binary_label,
-                             instance_label=instance_label, name='loss')
+                             existence_label=existence_label_tensor, name='loss')
     print(ret['total_loss'])
