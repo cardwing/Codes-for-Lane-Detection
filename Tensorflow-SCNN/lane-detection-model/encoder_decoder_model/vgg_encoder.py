@@ -210,7 +210,6 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             for cnt in range(2, conv_5_5.get_shape().as_list()[1]):
                 with tf.variable_scope("convs_6_1", reuse=True):
                     conv_6_1 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w1, [1, 1, 1, 1], 'SAME')), feature_list_old[cnt])
-                    # print(conv_6_1.get_shape().as_list())
                     feature_list_new.append(conv_6_1)
             # print(len(feature_list_new))
 
@@ -272,7 +271,6 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             processed_feature = tf.stack(feature_list_new, axis=2)
             processed_feature = tf.squeeze(processed_feature)
 
-            # print(processed_feature.get_shape().as_list())
             #######################
 
             
@@ -289,18 +287,15 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             # spatial softmax #
 
             N, H, W, C = conv_output.get_shape().as_list()
-
             features = conv_output # N x H x W x C
-            # features = tf.reshape(features, [N * H * W, C])# tf.reshape(tf.transpose(features, [0, 3, 1, 2]), [N * C, H * W])
             softmax = tf.nn.softmax(features)
-            # softmax = tf.reshape(softmax, [N, H, W, C]) # tf.transpose(tf.reshape(softmax, [N, C, H, W]), [0, 2, 3, 1]) # Reshape and transpose back to original format
 
             avg_pool = self.avgpooling(softmax, kernel_size=2, stride=2)
             reshape_output = tf.reshape(avg_pool, [N, -1])  
             fc_output = self.fullyconnect(reshape_output, 128)
             relu_output = self.relu(inputdata=fc_output, name='relu6')          
             fc_output = self.fullyconnect(relu_output, 4)
-            existence_output = fc_output # self.sigmoid(fc_output, name='final_output') # fc_output # self.sigmoid(fc_output, name='final_output')
+            existence_output = fc_output
 
             ret['existence_output'] = existence_output
            
