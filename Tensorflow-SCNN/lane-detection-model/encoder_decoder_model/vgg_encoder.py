@@ -9,6 +9,7 @@
 实现一个基于VGG16的特征编码类
 """
 from collections import OrderedDict
+import math
 
 import tensorflow as tf
 
@@ -187,10 +188,96 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
                                         out_dims=1024, dilation = 4, name='conv5_4')
 
             # conv stage 5_5
-            conv_5_5 = self._conv_dilated_stage(input_tensor=conv_5_4, k_size=3,
-                                        out_dims=512, dilation = 2, name='conv5_5')
+            conv_5_5 = self._conv_stage(input_tensor=conv_5_4, k_size=1,
+                                        out_dims=128, name='conv5_5') # 8 x 36 x 100 x 128
 
-            dropout_output = self.dropout(conv_5_5, 0.9, is_training=self._is_training, name='dropout') # 0.9 denotes the probability of being kept
+
+            # add message passing #
+
+            # top to down #
+ 
+            feature_list_old = []
+            feature_list_new = []
+            for cnt in range(conv_5_5.get_shape().as_list()[1]):
+                feature_list_old.append(tf.expand_dims(conv_5_5[:, cnt, :, :], axis=1))
+            feature_list_new.append(tf.expand_dims(conv_5_5[:, 0, :, :], axis=1))
+            
+            w1 = tf.get_variable('W1', [1, 9, 128, 128], initializer=tf.random_normal_initializer(0, math.sqrt(2.0 / (9 * 128 * 128 * 5) ) ) )
+            with tf.variable_scope("convs_6_1"):
+                conv_6_1 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_old[0], w1, [1, 1, 1, 1], 'SAME')), feature_list_old[1])
+                feature_list_new.append(conv_6_1)
+
+            for cnt in range(2, conv_5_5.get_shape().as_list()[1]):
+                with tf.variable_scope("convs_6_1", reuse=True):
+                    conv_6_1 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w1, [1, 1, 1, 1], 'SAME')), feature_list_old[cnt])
+                    # print(conv_6_1.get_shape().as_list())
+                    feature_list_new.append(conv_6_1)
+            # print(len(feature_list_new))
+
+            # down to top #
+            feature_list_old = feature_list_new
+            feature_list_new = []
+            feature_list_new.append(feature_list_old[35])
+
+            w2 = tf.get_variable('W2', [1, 9, 128, 128], initializer=tf.random_normal_initializer(0, math.sqrt(2.0 / (9 * 128 * 128 * 5) ) ) )
+            with tf.variable_scope("convs_6_2"):
+                conv_6_2 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_old[35], w2, [1, 1, 1, 1], 'SAME')), feature_list_old[34])
+                feature_list_new.append(conv_6_2)
+
+            for cnt in range(2, conv_5_5.get_shape().as_list()[1]):
+                with tf.variable_scope("convs_6_2", reuse=True):
+                    conv_6_2 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w2, [1, 1, 1, 1], 'SAME')), feature_list_old[35-cnt])
+                    feature_list_new.append(conv_6_2)
+                       
+            feature_list_new.reverse() 
+            
+            processed_feature = tf.stack(feature_list_new, axis=1)
+            processed_feature = tf.squeeze(processed_feature)
+           
+            # left to right #
+
+            feature_list_old = []
+            feature_list_new = []
+            for cnt in range(processed_feature.get_shape().as_list()[2]):
+                feature_list_old.append(tf.expand_dims(processed_feature[:, :, cnt, :], axis=2))
+            feature_list_new.append(tf.expand_dims(processed_feature[:, :, 0, :], axis=2))
+            
+            w3 = tf.get_variable('W3', [9, 1, 128, 128], initializer=tf.random_normal_initializer(0, math.sqrt(2.0 / (9 * 128 * 128 * 5) ) ) )
+            with tf.variable_scope("convs_6_3"):
+                conv_6_3 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_old[0], w3, [1, 1, 1, 1], 'SAME')), feature_list_old[1])
+                feature_list_new.append(conv_6_3)
+
+            for cnt in range(2, processed_feature.get_shape().as_list()[2]):
+                with tf.variable_scope("convs_6_3", reuse=True):
+                    conv_6_3 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w3, [1, 1, 1, 1], 'SAME')), feature_list_old[cnt])
+                    feature_list_new.append(conv_6_3)
+
+            # right to left #
+
+            feature_list_old = feature_list_new
+            feature_list_new = []
+            feature_list_new.append(feature_list_old[99])
+
+            w4 = tf.get_variable('W4', [9, 1, 128, 128], initializer=tf.random_normal_initializer(0, math.sqrt(2.0 / (9 * 128 * 128 * 5) ) ) )
+            with tf.variable_scope("convs_6_4"):
+                conv_6_4 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_old[99], w4, [1, 1, 1, 1], 'SAME')), feature_list_old[98])
+                feature_list_new.append(conv_6_4)
+
+            for cnt in range(2, processed_feature.get_shape().as_list()[2]):
+                with tf.variable_scope("convs_6_4", reuse=True):
+                    conv_6_4 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w4, [1, 1, 1, 1], 'SAME')), feature_list_old[99-cnt])
+                    feature_list_new.append(conv_6_4)
+                       
+            feature_list_new.reverse() 
+            processed_feature = tf.stack(feature_list_new, axis=2)
+            processed_feature = tf.squeeze(processed_feature)
+
+            # print(processed_feature.get_shape().as_list())
+            #######################
+
+            
+
+            dropout_output = self.dropout(processed_feature, 0.9, is_training=self._is_training, name='dropout') # 0.9 denotes the probability of being kept
 
             conv_output = self.conv2d(inputdata=dropout_output, out_channel=5,
                                kernel_size=1, use_bias=True, name='conv_6')
@@ -204,16 +291,16 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             N, H, W, C = conv_output.get_shape().as_list()
 
             features = conv_output # N x H x W x C
-            features = tf.reshape(tf.transpose(features, [0, 3, 1, 2]), [N * C, H * W])
+            # features = tf.reshape(features, [N * H * W, C])# tf.reshape(tf.transpose(features, [0, 3, 1, 2]), [N * C, H * W])
             softmax = tf.nn.softmax(features)
-            softmax = tf.transpose(tf.reshape(softmax, [N, C, H, W]), [0, 2, 3, 1]) # Reshape and transpose back to original format
+            # softmax = tf.reshape(softmax, [N, H, W, C]) # tf.transpose(tf.reshape(softmax, [N, C, H, W]), [0, 2, 3, 1]) # Reshape and transpose back to original format
 
             avg_pool = self.avgpooling(softmax, kernel_size=2, stride=2)
             reshape_output = tf.reshape(avg_pool, [N, -1])  
             fc_output = self.fullyconnect(reshape_output, 128)
             relu_output = self.relu(inputdata=fc_output, name='relu6')          
             fc_output = self.fullyconnect(relu_output, 4)
-            existence_output = fc_output # self.sigmoid(fc_output, name='final_output')
+            existence_output = fc_output # self.sigmoid(fc_output, name='final_output') # fc_output # self.sigmoid(fc_output, name='final_output')
 
             ret['existence_output'] = existence_output
            
