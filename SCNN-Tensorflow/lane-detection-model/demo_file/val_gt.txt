@@ -1,0 +1,7 @@
+/driver_23_30frame/05171102_0766.MP4/00020.jpg /laneseg_label_w16/driver_23_30frame/05171102_0766.MP4/00020.png 1 1 1 0
+/driver_23_30frame/05171102_0766.MP4/00050.jpg /laneseg_label_w16/driver_23_30frame/05171102_0766.MP4/00050.png 1 1 1 0
+/driver_23_30frame/05171102_0766.MP4/00080.jpg /laneseg_label_w16/driver_23_30frame/05171102_0766.MP4/00080.png 1 1 1 0
+/driver_23_30frame/05171102_0766.MP4/00110.jpg /laneseg_label_w16/driver_23_30frame/05171102_0766.MP4/00110.png 1 1 1 0
+/driver_23_30frame/05171102_0766.MP4/00140.jpg /laneseg_label_w16/driver_23_30frame/05171102_0766.MP4/00140.png 1 1 1 0
+/driver_23_30frame/05171102_0766.MP4/00170.jpg /laneseg_label_w16/driver_23_30frame/05171102_0766.MP4/00170.png 1 1 1 0
+/driver_23_30frame/05171102_0766.MP4/00200.jpg /laneseg_label_w16/driver_23_30frame/05171102_0766.MP4/00200.png 1 1 1 0

@@ -2,7 +2,7 @@ Codes for CNN-based lane detection models.
 
 # Timeline
 
-- [SCNN-Tensorflow](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) is released. (2018-11-24)
+- [SCNN-Tensorflow](./SCNN-Tensorflow) is released. (2018-11-24)
 
 # Content
 
@@ -50,7 +50,7 @@ Testing the performance now.
 
 Notes:
 
-Please go to [Tensorflow-SCNN](https://github.com/cardwing/Codes-for-Lane-Detection/tree/master/Tensorflow-SCNN) to see detailed instructions. 
+Please go to [SCNN-Tensorflow](./SCNN-Tensorflow) to see detailed instructions. 
 
 ## SCNN-Pytorch
 
