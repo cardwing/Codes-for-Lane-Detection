@@ -90,8 +90,6 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
     out_logits = tf.nn.softmax(logits=out_logits)
     out_logits_out = tf.argmax(out_logits, axis=-1) # 8 x 288 x 800
 
-    # print(out_logits_out.get_shape().as_list())
-
     pred_0 = tf.count_nonzero(tf.multiply(tf.cast(tf.equal(instance_label_tensor, 0), tf.int64), tf.cast(tf.equal(out_logits_out, 0), tf.int64)))
 
     pred_1 = tf.count_nonzero(tf.multiply(tf.cast(tf.equal(instance_label_tensor, 1), tf.int64), tf.cast(tf.equal(out_logits_out, 1), tf.int64)))
@@ -221,8 +219,6 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
             t_start = time.time()
 
             gt_imgs, instance_gt_labels, existence_gt_labels = train_dataset.next_batch(CFG.TRAIN.BATCH_SIZE)
-
-            # Perform data augmentation
 
             gt_imgs = [cv2.resize(tmp,
                                   dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
