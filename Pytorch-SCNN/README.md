@@ -4,10 +4,10 @@ Pytorch version of SCNN. (on-going)
 ### Prerequisites
 - [Pytorch](https://pytorch.org/)
 
-### Testing
+### Test
 To be released
 
-### Training
+### Train
 To be released
 
 ### Pytorch version of SCNN
