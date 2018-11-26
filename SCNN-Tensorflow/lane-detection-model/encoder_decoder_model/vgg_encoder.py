@@ -284,8 +284,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             ### add lane existence prediction branch ###
 
             # spatial softmax #
-
-            N, H, W, C = conv_output.get_shape().as_list()
+            # N, H, W, C = conv_output.get_shape().as_list()
             features = conv_output # N x H x W x C
             softmax = tf.nn.softmax(features)
 
@@ -301,7 +300,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
         return ret
 
 if __name__ == '__main__':
-    a = tf.placeholder(dtype=tf.float32, shape=[1, 2048, 2048, 3], name='input')
+    a = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 3], name='input')
     encoder = VGG16Encoder(phase=tf.constant('train', dtype=tf.string))
     ret = encoder.encode(a, name='encode')
     for layer_name, layer_info in ret.items():
