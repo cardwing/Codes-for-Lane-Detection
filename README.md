@@ -1,4 +1,4 @@
-Codes for CNN-based lane detection models. (Cleaning the repo now)
+Codes for CNN-based lane detection models. (Full codes will be uploaded soon!)
 
 # Timeline
 
