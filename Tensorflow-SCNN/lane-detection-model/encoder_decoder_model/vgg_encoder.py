@@ -211,7 +211,6 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
                 with tf.variable_scope("convs_6_1", reuse=True):
                     conv_6_1 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w1, [1, 1, 1, 1], 'SAME')), feature_list_old[cnt])
                     feature_list_new.append(conv_6_1)
-            # print(len(feature_list_new))
 
             # down to top #
             feature_list_old = feature_list_new
