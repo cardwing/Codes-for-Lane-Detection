@@ -303,5 +303,4 @@ if __name__ == '__main__':
     a = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 3], name='input')
     encoder = VGG16Encoder(phase=tf.constant('train', dtype=tf.string))
     ret = encoder.encode(a, name='encode')
-    for layer_name, layer_info in ret.items():
-        print('layer name: {:s} shape: {}'.format(layer_name, layer_info['shape']))
+    print(ret)
