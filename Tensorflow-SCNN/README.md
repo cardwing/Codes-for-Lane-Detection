@@ -12,11 +12,14 @@ Tensorflow version of SCNN in CULane. (Final evaluation is on-going!)
 ## Download VGG-16
 Download the vgg.npy [here](https://github.com/machrisaa/tensorflow-vgg) and put it in lane-detection-model/data.
 
-## Testing
+## Test the pre-trained model
+Download the pre-trained model here.
+
+## Test
     cd lane-detection-model
     CUDA_VISIBLE_DEVICES="0" python tools/test_lanenet.py 
 
-## Training
+## Train
     cd lane-detection-model
     CUDA_VISIBLE_DEVICES="0" python tools/train_lanenet.py --net vgg --dataset_dir /path/to/CULane-dataset/
 
