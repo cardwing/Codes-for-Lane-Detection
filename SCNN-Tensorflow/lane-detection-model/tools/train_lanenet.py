@@ -231,16 +231,12 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
                        for tmp in gt_imgs]
             gt_imgs = [(tmp - VGG_MEAN) for tmp in gt_imgs]
 
-            # gt_imgs = gt_imgs / 255.0
-
             instance_gt_labels = [cv2.resize(tmp,
                                              dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
                                              dst=tmp,
                                              interpolation=cv2.INTER_NEAREST)
                                   for tmp in instance_gt_labels]
             
-
-
             phase_train = 'train'
 
             _, c, train_accuracy, train_accuracy_back, train_instance_loss, train_existence_loss, binary_seg_img = \
@@ -275,12 +271,6 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
                 train_accuracy_mean.clear()
                 train_accuracy_back_mean.clear()
 
-                '''val_cost_time_mean.clear()
-                val_instance_loss_mean.clear()
-                val_existence_loss_mean.clear()
-                val_accuracy_mean.clear()
-                val_accuracy_back_mean.clear()'''
-
             if epoch % 1000 == 0:
                 saver.save(sess=sess, save_path=model_save_path, global_step=epoch)
 
@@ -298,8 +288,6 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
                                           interpolation=cv2.INTER_CUBIC)
                                for tmp in gt_imgs_val]
                 gt_imgs_val = [(tmp - VGG_MEAN) for tmp in gt_imgs_val]
-
-                # gt_imgs_val = gt_imgs_val / 255.0
 
                 instance_gt_labels_val = [cv2.resize(tmp,
                                                      dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
