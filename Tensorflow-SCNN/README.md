@@ -1,5 +1,5 @@
 # Tensorflow-SCNN
-Tensorflow version of SCNN in CULane. (Final evaluation is on-going!)
+Tensorflow version of SCNN in CULane.
 
 ## Prerequisites
 - [Tensorflow](https://www.tensorflow.org/)
