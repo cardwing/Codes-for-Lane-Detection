@@ -86,10 +86,10 @@ class LaneNet(cnn_basenet.CNNBaseModel):
             binary_label_reshape = tf.one_hot(binary_label_reshape, depth=5)
 
             class_weights = tf.constant([[0.4, 1.0, 1.0, 1.0, 1.0]])
-            weights = tf.reduce_sum(class_weights * binary_label_reshape, axis=1)
+            weights_loss = tf.reduce_sum(tf.multiply(binary_label_reshape, class_weights), 2)
        
-            binary_segmenatation_loss = tf.nn.softmax_cross_entropy_with_logits(
-                labels=binary_label_reshape, logits=decode_logits_reshape, name='entropy_loss')
+            binary_segmenatation_loss = tf.losses.softmax_cross_entropy(onehot_labels=binary_label_reshape, logits=decode_logits_reshape, weights=weights_loss)
+            # binary_segmenatation_loss = tf.nn.softmax_cross_entropy_with_logits(labels=binary_label_reshape, logits=decode_logits_reshape, name='entropy_loss')
 
             # binary_segmenatation_loss = binary_segmenatation_loss * weights # weighted loss function
 
@@ -98,6 +98,8 @@ class LaneNet(cnn_basenet.CNNBaseModel):
             # Compute the sigmoid loss
 
             existence_logit = inference_ret['existence_output']
+
+            # print(existence_label)
             
             existence_loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=existence_label, logits=existence_logit)
 
@@ -133,8 +135,29 @@ class LaneNet(cnn_basenet.CNNBaseModel):
             # Compute loss
 
             decode_logits = inference_ret['prob_output']
+            # print(decode_logits)
+
             binary_seg_ret = tf.nn.softmax(logits=decode_logits)
-            binary_seg_ret = tf.argmax(binary_seg_ret, axis=-1)
+
+            
+            prob_list = []
+
+            kernel = tf.get_variable('kernel', [9, 9, 1, 1], initializer=tf.constant_initializer(1.0/81), trainable=False)
+
+            with tf.variable_scope("convs_smooth"):
+                prob_smooth = tf.nn.conv2d(tf.cast(tf.expand_dims(binary_seg_ret[:, :, :, 0], axis=3), tf.float32), kernel, [1, 1, 1, 1], 'SAME')
+                prob_list.append(prob_smooth)
+
+            for cnt in range(1, binary_seg_ret.get_shape().as_list()[3]):
+                with tf.variable_scope("convs_smooth", reuse=True):
+                    prob_smooth = tf.nn.conv2d(tf.cast(tf.expand_dims(binary_seg_ret[:, :, :, cnt], axis=3), tf.float32), kernel, [1, 1, 1, 1], 'SAME')
+                    prob_list.append(prob_smooth)
+            processed_prob = tf.stack(prob_list, axis=4)
+            processed_prob = tf.squeeze(processed_prob)
+
+            binary_seg_ret = processed_prob # tf.nn.conv2d(tf.cast(binary_seg_ret, tf.float32), kernel, [1, 1, 1, 1], 'SAME')
+            
+            # binary_seg_ret = tf.argmax(binary_seg_ret, axis=-1)
 
             # Predict lane existence:
             existence_logit = inference_ret['existence_output']
