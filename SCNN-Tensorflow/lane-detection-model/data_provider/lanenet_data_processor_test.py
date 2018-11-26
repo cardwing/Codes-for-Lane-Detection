@@ -88,12 +88,3 @@ class DataSet(object):
 
             self._next_batch_loop_count += 1
             return gt_imgs
-
-
-if __name__ == '__main__':
-    val = DataSet('/home/houyuenan/lanenet-lane-detection/data/training_data_example/train.txt')
-    a1, a2, a3 = val.next_batch(1)
-    cv2.imwrite('test_binary_label.png', a2[0] * 255)
-    b1, b2, b3 = val.next_batch(50)
-    c1, c2, c3 = val.next_batch(50)
-    dd, d2, d3 = val.next_batch(50)
