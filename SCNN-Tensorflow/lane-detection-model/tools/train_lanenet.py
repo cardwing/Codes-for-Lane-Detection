@@ -184,9 +184,6 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
             log.info('Training from scratch')
             init = tf.global_variables_initializer()
             sess.run(init)
-            '''for i in range(82):
-                # print(i)
-                _ = sess.run([op_list[i]],feed_dict={list_tmp[i]: value[i]})'''
         else:
             log.info('Restore model from last model checkpoint {:s}'.format(weights_path))
             saver.restore(sess=sess, save_path=weights_path)
@@ -230,7 +227,7 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
             gt_imgs = [cv2.resize(tmp,
                                   dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
                                   dst=tmp,
-                                  interpolation=cv2.INTER_LINEAR)
+                                  interpolation=cv2.INTER_CUBIC)
                        for tmp in gt_imgs]
             gt_imgs = [(tmp - VGG_MEAN) for tmp in gt_imgs]
 
@@ -298,7 +295,7 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
                 gt_imgs_val = [cv2.resize(tmp,
                                           dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
                                           dst=tmp,
-                                          interpolation=cv2.INTER_LINEAR)
+                                          interpolation=cv2.INTER_CUBIC)
                                for tmp in gt_imgs_val]
                 gt_imgs_val = [(tmp - VGG_MEAN) for tmp in gt_imgs_val]
 
