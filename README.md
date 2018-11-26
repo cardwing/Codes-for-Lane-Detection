@@ -27,7 +27,7 @@ Codes for CNN-based lane detection models.
 
 # Models
 
-Preliminary results on CULane testing set (F1-measure):
+Preliminary results on CULane testing set (F1-measure, waiting for updates):
 
 |Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|SCNN-Pytorch|
 |:---:|:---:|:---:|:---:|
