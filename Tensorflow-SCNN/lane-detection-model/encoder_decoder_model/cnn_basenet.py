@@ -278,7 +278,7 @@ class CNNBaseModel(object):
             :return:
             """
             # print('batch_normalization: train phase')
-            return keep_prob
+            return tf.nn.dropout(inputdata, keep_prob, noise_shape, name=name)
 
         def f2():
             """
@@ -286,13 +286,13 @@ class CNNBaseModel(object):
             :return:
             """
             # print('batch_normalization: test phase')
-            return 1.0
-
-        keep_prob = tf.cond(is_training, f1, f2)
+            return inputdata
 
         input_shape = inputdata.get_shape().as_list()
         noise_shape = tf.constant(value=[input_shape[0], 1, 1, input_shape[3]])
-        output = tf.nn.dropout(inputdata, keep_prob, noise_shape, name=name)
+
+        output = tf.cond(is_training, f1, f2)
+        # output = tf.nn.dropout(inputdata, keep_prob, noise_shape, name=name)
 
         return output
 
@@ -347,7 +347,7 @@ class CNNBaseModel(object):
             # print('batch_normalization: train phase')
             return tf_layer.batch_norm(
                              inputdata, is_training=True,
-                             center=True, updates_collections=None,
+                             center=True, scale=True, updates_collections=None,
                              scope=name, reuse=False)
 
         def f2():
@@ -358,7 +358,7 @@ class CNNBaseModel(object):
             # print('batch_normalization: test phase')
             return tf_layer.batch_norm(
                              inputdata, is_training=False,
-                             center=True, updates_collections=None,
+                             center=True, scale=True, updates_collections=None,
                              scope=name, reuse=True)
 
         output = tf.cond(is_training, f1, f2)
@@ -468,4 +468,3 @@ class CNNBaseModel(object):
                 ret = conv
 
         return ret
-
