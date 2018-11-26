@@ -9,7 +9,7 @@ Tensorflow version of SCNN in CULane. (Final evaluation is on-going!)
     source activate tensorflow_gpu
     pip install --upgrade tensorflow-gpu==1.3.0
 
-Download the vgg.npy [here](https://github.com/machrisaa/tensorflow-vgg) and put it in the lane-detection-model/data.
+Download the vgg.npy [here](https://github.com/machrisaa/tensorflow-vgg) and put it in lane-detection-model/data.
 
 ### Testing
     cd lane-detection-model
