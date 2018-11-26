@@ -31,7 +31,6 @@ from data_provider import lanenet_data_processor
 CFG = global_config.cfg
 VGG_MEAN = [103.939, 116.779, 123.68]
 
-
 def init_args():
     """
 
@@ -87,22 +86,70 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
 
     # calculate the accuracy
     out_logits = compute_ret['instance_seg_logits']
+    out_logits_ref = out_logits
     out_logits = tf.nn.softmax(logits=out_logits)
-    out_logits_out = tf.argmax(out_logits, axis=-1)
-    out = tf.argmax(out_logits, axis=-1)
-    out = tf.expand_dims(out, axis=-1)
+    out_logits_out = tf.argmax(out_logits, axis=-1) # 8 x 288 x 800
 
-    idx = tf.where(tf.equal(instance_label_tensor, 1))
-    pix_cls_ret = tf.gather_nd(out, idx)
-    accuracy = tf.count_nonzero(pix_cls_ret)
-    accuracy = tf.divide(accuracy, tf.cast(tf.shape(pix_cls_ret)[0], tf.int64))
+    # print(out_logits_out.get_shape().as_list())
+
+    pred_0 = tf.count_nonzero(tf.multiply(tf.cast(tf.equal(instance_label_tensor, 0), tf.int64), tf.cast(tf.equal(out_logits_out, 0), tf.int64)))
+
+    pred_1 = tf.count_nonzero(tf.multiply(tf.cast(tf.equal(instance_label_tensor, 1), tf.int64), tf.cast(tf.equal(out_logits_out, 1), tf.int64)))
+    pred_2 = tf.count_nonzero(tf.multiply(tf.cast(tf.equal(instance_label_tensor, 2), tf.int64), tf.cast(tf.equal(out_logits_out, 2), tf.int64)))
+    pred_3 = tf.count_nonzero(tf.multiply(tf.cast(tf.equal(instance_label_tensor, 3), tf.int64), tf.cast(tf.equal(out_logits_out, 3), tf.int64)))
+    pred_4 = tf.count_nonzero(tf.multiply(tf.cast(tf.equal(instance_label_tensor, 4), tf.int64), tf.cast(tf.equal(out_logits_out, 4), tf.int64)))
+    gt_all = tf.count_nonzero(tf.cast(tf.greater(instance_label_tensor, 0), tf.int64))
+    gt_back = tf.count_nonzero(tf.cast(tf.equal(instance_label_tensor, 0), tf.int64))
+
+    pred_all = tf.add(tf.add(tf.add(pred_1, pred_2), pred_3), pred_4)
+
+    accuracy = tf.divide(pred_all, gt_all)
+    accuracy_back = tf.divide(pred_0, gt_back)
+
+    # Compute mIoU of Lanes
+    overlap_1 = pred_1
+    union_1 = tf.add(tf.count_nonzero(tf.cast(tf.equal(instance_label_tensor, 1), 
+                                             tf.int64)), 
+                     tf.count_nonzero(tf.cast(tf.equal(out_logits_out, 1), 
+                                             tf.int64)))
+    union_1 = tf.subtract(union_1, overlap_1)
+    IoU_1 = tf.divide(overlap_1, union_1)
+
+    overlap_2 = pred_2
+    union_2 = tf.add(tf.count_nonzero(tf.cast(tf.equal(instance_label_tensor, 2), 
+                                             tf.int64)), 
+                     tf.count_nonzero(tf.cast(tf.equal(out_logits_out, 2), 
+                                             tf.int64)))
+    union_2 = tf.subtract(union_2, overlap_2)
+    IoU_2 = tf.divide(overlap_2, union_2)
+
+    overlap_3 = pred_3
+    union_3 = tf.add(tf.count_nonzero(tf.cast(tf.equal(instance_label_tensor, 3), 
+                                             tf.int64)), 
+                     tf.count_nonzero(tf.cast(tf.equal(out_logits_out, 3), 
+                                             tf.int64)))
+    union_3 = tf.subtract(union_3, overlap_3)
+    IoU_3 = tf.divide(overlap_3, union_3)
+
+    overlap_4 = pred_4
+    union_4 = tf.add(tf.count_nonzero(tf.cast(tf.equal(instance_label_tensor, 4), 
+                                             tf.int64)), 
+                     tf.count_nonzero(tf.cast(tf.equal(out_logits_out, 4), 
+                                             tf.int64)))
+    union_4 = tf.subtract(union_4, overlap_4)
+    IoU_4 = tf.divide(overlap_4, union_4)
+
+    IoU = tf.reduce_mean(tf.stack([IoU_1, IoU_2, IoU_3, IoU_4]))
+
 
     global_step = tf.Variable(0, trainable=False)
-    learning_rate = tf.train.exponential_decay(CFG.TRAIN.LEARNING_RATE, global_step,
-                                               5000, 0.96, staircase=True)
+
+    learning_rate = tf.train.polynomial_decay(CFG.TRAIN.LEARNING_RATE, global_step, 
+                                                                90100, power=0.9)
+
     update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
     with tf.control_dependencies(update_ops):
-        optimizer = tf.train.AdamOptimizer(learning_rate=
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate=
                                            learning_rate).minimize(loss=total_loss,
                                                                    var_list=tf.trainable_variables(),
                                                                    global_step=global_step)
@@ -133,13 +180,13 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
 
     with sess.as_default():
 
-        tf.train.write_graph(graph_or_graph_def=sess.graph, logdir='',
-                             name='{:s}/lanenet_model.pb'.format(model_save_dir))
-
         if weights_path is None:
             log.info('Training from scratch')
             init = tf.global_variables_initializer()
             sess.run(init)
+            '''for i in range(82):
+                # print(i)
+                _ = sess.run([op_list[i]],feed_dict={list_tmp[i]: value[i]})'''
         else:
             log.info('Restore model from last model checkpoint {:s}'.format(weights_path))
             saver.restore(sess=sess, save_path=weights_path)
@@ -163,24 +210,31 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
         train_instance_loss_mean = []
         train_existence_loss_mean = []
         train_accuracy_mean= []
+        train_accuracy_back_mean= []
 
         val_cost_time_mean = []
         val_instance_loss_mean = []
         val_existence_loss_mean = []
         val_accuracy_mean = []
-
+        val_accuracy_back_mean = []
+        val_IoU_mean = []
 
         for epoch in range(train_epochs):
             # training part
             t_start = time.time()
 
             gt_imgs, instance_gt_labels, existence_gt_labels = train_dataset.next_batch(CFG.TRAIN.BATCH_SIZE)
+
+            # Perform data augmentation
+
             gt_imgs = [cv2.resize(tmp,
                                   dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
                                   dst=tmp,
                                   interpolation=cv2.INTER_LINEAR)
                        for tmp in gt_imgs]
-            gt_imgs = [tmp - VGG_MEAN for tmp in gt_imgs]
+            gt_imgs = [(tmp - VGG_MEAN) for tmp in gt_imgs]
+
+            # gt_imgs = gt_imgs / 255.0
 
             instance_gt_labels = [cv2.resize(tmp,
                                              dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
@@ -192,9 +246,9 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
 
             phase_train = 'train'
 
-            _, c, train_accuracy, train_instance_loss, train_existence_loss, binary_seg_img = \
+            _, c, train_accuracy, train_accuracy_back, train_instance_loss, train_existence_loss, binary_seg_img = \
                 sess.run([optimizer, total_loss,
-                          accuracy,
+                          accuracy, accuracy_back,
                           instance_loss,
                           existence_loss,
                           out_logits_out],
@@ -203,67 +257,90 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
                                     existence_label_tensor: existence_gt_labels,
                                     phase: phase_train})
 
+
             cost_time = time.time() - t_start
             train_cost_time_mean.append(cost_time)
             train_instance_loss_mean.append(train_instance_loss)
             train_existence_loss_mean.append(train_existence_loss)
             train_accuracy_mean.append(train_accuracy)
-
-            # validation part
-            gt_imgs_val, instance_gt_labels_val, existence_gt_labels_val \
-                = val_dataset.next_batch(CFG.TRAIN.VAL_BATCH_SIZE)
-            gt_imgs_val = [cv2.resize(tmp,
-                                      dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
-                                      dst=tmp,
-                                      interpolation=cv2.INTER_LINEAR)
-                           for tmp in gt_imgs_val]
-            gt_imgs_val = [tmp - VGG_MEAN for tmp in gt_imgs_val]
-            instance_gt_labels_val = [cv2.resize(tmp,
-                                                 dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
-                                                 dst=tmp,
-                                                 interpolation=cv2.INTER_NEAREST)
-                                      for tmp in instance_gt_labels_val]
-            phase_val = 'test'
-
-            t_start_val = time.time()
-            c_val, val_accuracy, val_instance_loss, val_existence_loss = \
-                sess.run([total_loss, accuracy, instance_loss, existence_loss],
-                         feed_dict={input_tensor: gt_imgs_val,
-                                    instance_label_tensor: instance_gt_labels_val,
-                                    existence_label_tensor: existence_gt_labels_val,
-                                    phase: phase_val})
-
-            cost_time_val = time.time() - t_start_val
-            val_cost_time_mean.append(cost_time_val)
-            val_instance_loss_mean.append(val_instance_loss)
-            val_existence_loss_mean.append(val_existence_loss)
-            val_accuracy_mean.append(val_accuracy)
+            train_accuracy_back_mean.append(train_accuracy_back)
 
             if epoch % CFG.TRAIN.DISPLAY_STEP == 0:
-                print('Epoch: {:d} loss_ins= {:6f} ({:6f}) loss_ext= {:6f} ({:6f}) accuracy= {:6f} ({:6f})'
+                print('Epoch: {:d} loss_ins= {:6f} ({:6f}) loss_ext= {:6f} ({:6f}) accuracy= {:6f} ({:6f}) accuracy_back= {:6f} ({:6f})'
                          ' mean_time= {:5f}s '.
-                         format(epoch + 1, train_instance_loss, np.mean(train_instance_loss_mean), train_existence_loss, np.mean(train_existence_loss_mean), train_accuracy, np.mean(train_accuracy_mean), np.mean(train_cost_time_mean))) # log.info
+                         format(epoch + 1, train_instance_loss, np.mean(train_instance_loss_mean), train_existence_loss, np.mean(train_existence_loss_mean), train_accuracy, np.mean(train_accuracy_mean), train_accuracy_back, np.mean(train_accuracy_back_mean), np.mean(train_cost_time_mean)))
 
-            if epoch % CFG.TRAIN.TEST_DISPLAY_STEP == 0:
-                print('Epoch_Val: {:d} loss_ins= {:6f} ({:6f}) '
-                         'loss_ext= {:6f} ({:6f}) accuracy= {:6f} ({:6f})'
-                         'mean_time= {:5f}s '.
-                         format(epoch + 1, val_instance_loss, np.mean(val_instance_loss_mean), val_existence_loss, np.mean(val_existence_loss_mean), val_accuracy, np.mean(val_accuracy_mean),
-                                np.mean(val_cost_time_mean)))
 
             if epoch % 500 == 0:
                 train_cost_time_mean.clear()
                 train_instance_loss_mean.clear()
                 train_existence_loss_mean.clear()
                 train_accuracy_mean.clear()
+                train_accuracy_back_mean.clear()
 
-                val_cost_time_mean.clear()
+                '''val_cost_time_mean.clear()
                 val_instance_loss_mean.clear()
                 val_existence_loss_mean.clear()
                 val_accuracy_mean.clear()
+                val_accuracy_back_mean.clear()'''
 
-            if epoch % 2000 == 0:
+            if epoch % 1000 == 0:
                 saver.save(sess=sess, save_path=model_save_path, global_step=epoch)
+
+            if epoch % 10000 != 0 or epoch == 0:
+                continue
+
+            for epoch_val in range(int(9675 / 8.0)):
+
+                # validation part
+                gt_imgs_val, instance_gt_labels_val, existence_gt_labels_val \
+                  = val_dataset.next_batch(CFG.TRAIN.VAL_BATCH_SIZE)
+                gt_imgs_val = [cv2.resize(tmp,
+                                          dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
+                                          dst=tmp,
+                                          interpolation=cv2.INTER_LINEAR)
+                               for tmp in gt_imgs_val]
+                gt_imgs_val = [(tmp - VGG_MEAN) for tmp in gt_imgs_val]
+
+                # gt_imgs_val = gt_imgs_val / 255.0
+
+                instance_gt_labels_val = [cv2.resize(tmp,
+                                                     dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
+                                                     dst=tmp,
+                                                     interpolation=cv2.INTER_NEAREST)
+                                          for tmp in instance_gt_labels_val]
+                phase_val = 'test'
+
+                t_start_val = time.time()
+                c_val, val_accuracy, val_accuracy_back, val_IoU, val_instance_loss, val_existence_loss = \
+                  sess.run([total_loss, accuracy, accuracy_back, IoU, instance_loss, existence_loss],
+                             feed_dict={input_tensor: gt_imgs_val,
+                                        instance_label_tensor: instance_gt_labels_val,
+                                        existence_label_tensor: existence_gt_labels_val,
+                                        phase: phase_val})
+
+                cost_time_val = time.time() - t_start_val
+                val_cost_time_mean.append(cost_time_val)
+                val_instance_loss_mean.append(val_instance_loss)
+                val_existence_loss_mean.append(val_existence_loss)
+                val_accuracy_mean.append(val_accuracy)
+                val_accuracy_back_mean.append(val_accuracy_back)
+                val_IoU_mean.append(val_IoU)
+
+                if epoch_val % 1 == 0:
+                    print('Epoch_Val: {:d} loss_ins= {:6f} ({:6f}) '
+                             'loss_ext= {:6f} ({:6f}) accuracy= {:6f} ({:6f}) accuracy_back= {:6f} ({:6f}) mIoU= {:6f} ({:6f})'
+                             'mean_time= {:5f}s '.
+                             format(epoch_val + 1, val_instance_loss, np.mean(val_instance_loss_mean), val_existence_loss, np.mean(val_existence_loss_mean), val_accuracy, np.mean(val_accuracy_mean), val_accuracy_back, np.mean(val_accuracy_back_mean), val_IoU, np.mean(val_IoU_mean), np.mean(val_cost_time_mean)))
+
+	        
+            val_cost_time_mean.clear()
+            val_instance_loss_mean.clear()
+            val_existence_loss_mean.clear()
+            val_accuracy_mean.clear()
+            val_accuracy_back_mean.clear()
+            val_IoU_mean.clear()
+
     sess.close()
 
     return
