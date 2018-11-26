@@ -60,7 +60,7 @@ def test_lanenet(image_path, weights_path, use_gpu):
     :return:
     """
 
-    test_dataset = lanenet_data_processor_test.DataSet('test_culane_img.txt')
+    test_dataset = lanenet_data_processor_test.DataSet(image_path)
 
 
     input_tensor = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 3], name='input_tensor')
@@ -137,8 +137,6 @@ if __name__ == '__main__':
         os.makedirs(args.save_dir)
 
     img_name = []
-    args.image_path = 'test_culane_img.txt'
-    args.weights_path = 'model/culane_lanenet/culane_scnn/culane_lanenet_vgg_2018-11-24-19-37-25.ckpt-73000'
     with open(str(args.image_path), 'r') as g:
         for line in g.readlines():
             img_name.append(line.strip())
