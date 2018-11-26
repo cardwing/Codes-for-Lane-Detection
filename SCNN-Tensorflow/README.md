@@ -1,8 +1,5 @@
 Tensorflow version of SCNN in CULane.
 
-## Prerequisites
-- [Tensorflow](https://www.tensorflow.org/)
-
 ## Installation
     conda create -n tensorflow_gpu pip python=3.5
     source activate tensorflow_gpu
