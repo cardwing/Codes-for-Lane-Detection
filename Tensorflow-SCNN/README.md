@@ -1,8 +1,5 @@
 # Tensorflow-SCNN
-Tensorflow version of SCNN in CULane.
-
-### Timeline
-Tensorflow version of SCNN is written. I will clean the codes and make them readable!
+Tensorflow version of SCNN in CULane. (Final evaluation)
 
 ### Prerequisites
 - [Tensorflow](https://www.tensorflow.org/)
