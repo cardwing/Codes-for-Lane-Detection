@@ -1,4 +1,3 @@
-# SCNN-Tensorflow
 Tensorflow version of SCNN in CULane.
 
 ## Prerequisites
