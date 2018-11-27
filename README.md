@@ -42,12 +42,6 @@ Preliminary results on CULane testing set (F1-measure, waiting for updates):
 
 ## SCNN-Tensorflow
 
-Update:
-
-Testing the performance now.
-
-Notes:
-
 Please go to [SCNN-Tensorflow](./SCNN-Tensorflow) to see detailed instructions.
 
 ## Our-Model
