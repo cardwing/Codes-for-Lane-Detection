@@ -21,7 +21,14 @@ Codes for CNN-based lane detection models.
 
 # Models
 
-Preliminary results on CULane testing set (F1-measure):
+1. Preliminary results on TuSimple testing set:
+
+|Model|Accuracy|FP|FN|
+|:---:|:---:|:---:|:---:|
+|SCNN-Torch|96.53%|0.0617|0.0180|
+|SCNN-Tensorflow|--|--|--|
+
+2. Preliminary results on CULane testing set (F1-measure):
 
 |Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|
 |:---:|:---:|:---:|
