@@ -1,9 +1,5 @@
 Codes for CNN-based lane detection models.
 
-# News
-
-- [SCNN-Tensorflow](./SCNN-Tensorflow) is released. (2018-11-24)
-
 # Content
 
 * [Prerequisites](#Prerequisites)
