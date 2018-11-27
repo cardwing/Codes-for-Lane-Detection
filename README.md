@@ -43,6 +43,15 @@ Codes for CNN-based lane detection models.
 |Crossroad|1990|4480|
 |Total|71.6|58.7|
 
+3. Preliminary results on BDD100K testing set:
+
+|Model|Accuracy|IoU|
+|:---:|:---:|:---:|
+|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|35.79%|15.84|
+|SCNN-Tensorflow|--|--|
+
+Note that the accuracy and IoU of lane pixels are computed.
+
 ## SCNN-Tensorflow
 
 Please go to [SCNN-Tensorflow](./SCNN-Tensorflow) to see detailed instructions.
