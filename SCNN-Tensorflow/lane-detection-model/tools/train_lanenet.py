@@ -147,8 +147,8 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
 
     update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
     with tf.control_dependencies(update_ops):
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate=
-                                           learning_rate).minimize(loss=total_loss,
+        optimizer = tf.train.MomentumOptimizer(learning_rate=
+                                           learning_rate, momentum=0.9).minimize(loss=total_loss,
                                                                    var_list=tf.trainable_variables(),
                                                                    global_step=global_step)
 
