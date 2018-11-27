@@ -25,7 +25,7 @@ Codes for CNN-based lane detection models.
 
 |Model|Accuracy|FP|FN|
 |:---:|:---:|:---:|:---:|
-|SCNN-Torch|96.53%|0.0617|0.0180|
+|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|96.53%|0.0617|0.0180|
 |SCNN-Tensorflow|--|--|--|
 
 2. Preliminary results on CULane testing set (F1-measure):
