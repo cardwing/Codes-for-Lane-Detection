@@ -21,9 +21,9 @@ Codes for CNN-based lane detection models.
 
 # Models
 
-Preliminary results on CULane testing set (F1-measure, waiting for updates):
+Preliminary results on CULane testing set (F1-measure):
 
-|Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow (old)|
+|Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|
 |:---:|:---:|:---:|
 |Normal|90.6|80.0|
 |Crowded|69.7|57.1|
