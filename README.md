@@ -10,6 +10,7 @@ Codes for CNN-based lane detection models. (Boosting the performance now!)
   * [TuSimple](#TuSimple)
   * [CULane](#CULane)
   * [BDD100K](#BDD100K)
+* [Performance](#Performance)
 * [Others](#Others)
   * [Citation](#Citation)
   * [Acknowledgement](#Acknowledgement)
@@ -20,6 +21,30 @@ Codes for CNN-based lane detection models. (Boosting the performance now!)
 - [Tensorflow](https://www.tensorflow.org/)
 
 # Models
+
+## SCNN-Tensorflow
+
+Please go to [SCNN-Tensorflow](./SCNN-Tensorflow) to see detailed instructions.
+
+## Our-Model
+
+Coming soon.
+
+# Datasets
+
+## TuSimple
+
+The ground-truth labels of TuSimple testing set is now available at [TuSimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). Please evaluate your pred.json using the labels and [this script](https://github.com/TuSimple/tusimple-benchmark/blob/master/evaluate/lane.py). Besides, to generate pred.json, you can refer to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/4).
+
+## CULane
+
+The whole dataset is available at [CULane](https://xingangpan.github.io/projects/CULane.html).
+
+## BDD100K
+
+The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
+
+# Performance
 
 1. TuSimple testing set:
 
@@ -51,28 +76,6 @@ Codes for CNN-based lane detection models. (Boosting the performance now!)
 |SCNN-Tensorflow|--|--|
 
 Note that the accuracy and IoU of lane pixels are computed.
-
-## SCNN-Tensorflow
-
-Please go to [SCNN-Tensorflow](./SCNN-Tensorflow) to see detailed instructions.
-
-## Our-Model
-
-Coming soon.
-
-# Datasets
-
-## TuSimple
-
-The ground-truth labels of TuSimple testing set is now available at [TuSimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). Please evaluate your pred.json using the labels and [this script](https://github.com/TuSimple/tusimple-benchmark/blob/master/evaluate/lane.py). Besides, to generate pred.json, you can refer to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/4).
-
-## CULane
-
-The whole dataset is available at [CULane](https://xingangpan.github.io/projects/CULane.html).
-
-## BDD100K
-
-The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
 
 # Others
 
