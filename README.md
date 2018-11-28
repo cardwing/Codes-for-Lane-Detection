@@ -1,4 +1,8 @@
-Codes for CNN-based lane detection models. (Boosting the performance now!)
+Codes for CNN-based lane detection models. 
+
+# To-Do List
+
+- Test SCNN-Tensorflow in different lane detection benchmarks!
 
 # Content
 
