@@ -32,16 +32,16 @@ Codes for CNN-based lane detection models. (Boosting the performance now!)
 
 |Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|
 |:---:|:---:|:---:|
-|Normal|90.6|80.0|
-|Crowded|69.7|57.1|
-|Night|66.1|50.8|
-|No line|43.4|35.0|
-|Shadow|66.9|45.6|
-|Arrow|84.1|68.3|
-|Dazzle light|58.5|48.7|
-|Curve|64.4|51.6|
-|Crossroad|1990|4480|
-|Total|71.6|58.7|
+|Normal|90.6|85.7|
+|Crowded|69.7|62.7|
+|Night|66.1|59.7|
+|No line|43.4|37.6|
+|Shadow|66.9|55.4|
+|Arrow|84.1|77.1|
+|Dazzle light|58.5|53.5|
+|Curve|64.4|58.7|
+|Crossroad|1990|2771|
+|Total|71.6|65.3|
 
 3. BDD100K testing set:
 
