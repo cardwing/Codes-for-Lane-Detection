@@ -68,6 +68,8 @@ The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
 |Crossroad|1990|2771|
 |Total|71.6|65.3|
 
+The pre-trained model for testing is [here](https://drive.google.com/open?id=1knRuo1uXOiSuGn6hzHLaK0KD_FhbIxw2).
+
 3. BDD100K testing set:
 
 |Model|Accuracy|IoU|
@@ -75,7 +77,7 @@ The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
 |[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|35.79%|15.84|
 |SCNN-Tensorflow|--|--|
 
-Note that the accuracy and IoU of lane pixels are computed.
+The accuracy and IoU of lane pixels are computed.
 
 # Others
 
@@ -95,7 +97,7 @@ If you use the codes, please cite the following publications:
 Our paper working on lane detection will be available soon!
 
 ## Acknowledgement
-This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection)
+This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection).
 
 ## Contact
 If you have any problems in reproducing the results, just raise an issue in this repo.
