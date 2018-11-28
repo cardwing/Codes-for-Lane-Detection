@@ -59,16 +59,16 @@ The pre-trained model for testing is here. (coming soon!)
 
 |Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|
 |:---:|:---:|:---:|
-|Normal|90.6|85.7|
-|Crowded|69.7|62.7|
-|Night|66.1|59.7|
-|No line|43.4|37.6|
-|Shadow|66.9|55.4|
+|Normal|90.6|86.4|
+|Crowded|69.7|63.7|
+|Night|66.1|60.1|
+|No line|43.4|37.8|
+|Shadow|66.9|61.4|
 |Arrow|84.1|77.1|
-|Dazzle light|58.5|53.5|
-|Curve|64.4|58.7|
-|Crossroad|1990|2771|
-|Total|71.6|65.3|
+|Dazzle light|58.5|52.5|
+|Curve|64.4|58.6|
+|Crossroad|1990|2028|
+|Total|71.6|66.4|
 
 The pre-trained model for testing is [here](https://drive.google.com/open?id=1knRuo1uXOiSuGn6hzHLaK0KD_FhbIxw2).
 
