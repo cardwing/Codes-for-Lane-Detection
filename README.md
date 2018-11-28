@@ -53,6 +53,8 @@ The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
 |[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|96.53%|0.0617|0.0180|
 |SCNN-Tensorflow|--|--|--|
 
+The pre-trained model for testing is here. (coming soon!)
+
 2. CULane testing set (F1-measure):
 
 |Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|
@@ -77,7 +79,7 @@ The pre-trained model for testing is [here](https://drive.google.com/open?id=1kn
 |[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|35.79%|15.84|
 |SCNN-Tensorflow|--|--|
 
-The accuracy and IoU of lane pixels are computed.
+The accuracy and IoU of lane pixels are computed. The pre-trained model for testing is here. (coming soon!)
 
 # Others
 
