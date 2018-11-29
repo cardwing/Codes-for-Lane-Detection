@@ -10,7 +10,7 @@ Tensorflow version of SCNN in CULane.
 Download the vgg.npy [here](https://github.com/machrisaa/tensorflow-vgg) and put it in lane-detection-model/data.
 
 ## Pre-trained model for testing
-Download the pre-trained model [here](https://drive.google.com/open?id=1knRuo1uXOiSuGn6hzHLaK0KD_FhbIxw2).
+Download the pre-trained model [here](https://drive.google.com/open?id=18jDdLAyqK0wlazkYulAa2RzAIc7r5Gg6).
 
 ## Test
     cd lane-detection-model
