@@ -1,4 +1,4 @@
-Codes for CNN-based lane detection models. 
+Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Understanding"](https://arxiv.org/abs/1712.06080). (SCNN-Tensorflow) 
 
 # To-Do List
 
@@ -7,9 +7,7 @@ Codes for CNN-based lane detection models.
 # Content
 
 * [Prerequisites](#Prerequisites)
-* [Models](#Models)
-  * [SCNN-Tensorflow](#SCNN-Tensorflow)
-  * [Our-Model](#Our-Model)
+* [SCNN-Tensorflow](#SCNN-Tensorflow)
 * [Datasets](#Datasets)
   * [TuSimple](#TuSimple)
   * [CULane](#CULane)
@@ -21,18 +19,11 @@ Codes for CNN-based lane detection models.
   * [Contact](#Contact)
 
 # Prerequisites
-- [Torch](http://torch.ch/docs/getting-started.html)
 - [Tensorflow](https://www.tensorflow.org/)
 
-# Models
-
-## SCNN-Tensorflow
+# SCNN-Tensorflow
 
 Please go to [SCNN-Tensorflow](./SCNN-Tensorflow) to see detailed instructions.
-
-## Our-Model
-
-Coming soon.
 
 # Datasets
 
@@ -100,7 +91,6 @@ If you use the codes, please cite the following publications:
   year = {2018}  
 }
 ```
-Our paper working on lane detection will be available soon!
 
 ## Acknowledgement
 This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet](https://github.com/MaybeShewill-CV/lanenet-lane-detection).
