@@ -26,8 +26,6 @@ except ImportError:
     pass
 
 from lanenet_model import lanenet_merge_model
-from lanenet_model import lanenet_cluster
-from lanenet_model import lanenet_postprocess
 from config import global_config
 from data_provider import lanenet_data_processor_test
 
