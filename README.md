@@ -30,11 +30,11 @@ Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Un
     pip3 install -r SCNN-Tensorflow/lane-detection-model/requirements.txt
 ```
 
-2. Download VGG-16
+2. Download VGG-16:
 
 Download the vgg.npy [here](https://github.com/machrisaa/tensorflow-vgg) and put it in SCNN-Tensorflow/lane-detection-model/data.
 
-3. Pre-trained model for testing
+3. Pre-trained model for testing:
 
 Download the pre-trained model [here](https://drive.google.com/open?id=18jDdLAyqK0wlazkYulAa2RzAIc7r5Gg6).
 
