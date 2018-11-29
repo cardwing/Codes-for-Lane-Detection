@@ -11,9 +11,7 @@ Build Lane detection model
 import tensorflow as tf
 
 from encoder_decoder_model import vgg_encoder
-from encoder_decoder_model import dense_encoder
 from encoder_decoder_model import cnn_basenet
-from lanenet_model import lanenet_discriminative_loss
 
 
 class LaneNet(cnn_basenet.CNNBaseModel):
