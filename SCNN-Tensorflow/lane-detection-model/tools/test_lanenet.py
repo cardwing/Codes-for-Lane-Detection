@@ -135,4 +135,4 @@ if __name__ == '__main__':
         for line in g.readlines():
             img_name.append(line.strip())
 
-    test_lanenet(args.image_path, args.weights_path, args.use_gpu, image_name, args.batch_size)
+    test_lanenet(args.image_path, args.weights_path, args.use_gpu, img_name, args.batch_size)
