@@ -46,6 +46,8 @@ Download the pre-trained model [here](https://drive.google.com/open?id=18jDdLAyq
 
 Note that path/to/image_name_list should be like [test_img.txt](./SCNN-Tensorflow/lane-detection-model/demo_file/test_img.txt). Now, you get the probability maps from our model. To get the final performance, you need to follow [SCNN](https://github.com/XingangPan/SCNN) to get curve lines from probability maps as well as calculate precision, recall and F1-measure.
 
+Reminder: you should check [lanenet_data_processor.py](./SCNN-Tensorflow/lane-detection-model/data_provider/lanenet_data_processor.py) and [lanenet_data_processor_test.py](./SCNN-Tensorflow/lane-detection-model/data_provider/lanenet_data_processor.py) to ensure that the processing of image path is right. You are recommended to use the absolute path in your image path list.
+
 ## Train
     CUDA_VISIBLE_DEVICES="0" python tools/train_lanenet.py --net vgg --dataset_dir path/to/CULane-dataset/
 
