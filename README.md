@@ -36,7 +36,7 @@ Download the vgg.npy [here](https://github.com/machrisaa/tensorflow-vgg) and put
 
 3. Pre-trained model for testing:
 
-Download the pre-trained model [here](https://drive.google.com/open?id=18jDdLAyqK0wlazkYulAa2RzAIc7r5Gg6).
+Download the pre-trained model [here](https://drive.google.com/open?id=1-E0Bws7-v35vOVfqEXDTJdfovUTQ2sf5).
 
 # SCNN-Tensorflow
 
@@ -82,18 +82,18 @@ The pre-trained model for testing is here. (coming soon!)
 
 |Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|
 |:---:|:---:|:---:|
-|Normal|90.6|88.7|
-|Crowded|69.7|66.7|
-|Night|66.1|63.8|
-|No line|43.4|41.7|
-|Shadow|66.9|61.4|
-|Arrow|84.1|81.8|
-|Dazzle light|58.5|55.9|
-|Curve|64.4|61.6|
-|Crossroad|1990|1917|
-|Total|71.6|69.3|
+|Normal|90.6|90.2|
+|Crowded|69.7|71.9|
+|Night|66.1|64.6|
+|No line|43.4|45.8|
+|Shadow|66.9|73.8|
+|Arrow|84.1|83.8|
+|Dazzle light|58.5|59.5|
+|Curve|64.4|63.4|
+|Crossroad|1990|4137|
+|Total|71.6|71.3|
 
-The pre-trained model for testing is [here](https://drive.google.com/open?id=18jDdLAyqK0wlazkYulAa2RzAIc7r5Gg6).
+The pre-trained model for testing is [here](https://drive.google.com/open?id=1-E0Bws7-v35vOVfqEXDTJdfovUTQ2sf5). You can further boost the performance by referring to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/5).
 
 3. BDD100K testing set:
 
