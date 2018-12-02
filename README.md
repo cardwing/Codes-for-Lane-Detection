@@ -2,9 +2,9 @@ Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Un
 
 # To-Do List
 
-- Test SCNN-Tensorflow in TuSimple and BDD100K
-- Provide detailed instructions to run SCNN-Tensorflow in TuSimple and BDD100K
-- Upload our light-weight model (ENet-SAD) and its training & testing scripts
+- [ ] Test SCNN-Tensorflow in TuSimple and BDD100K
+- [ ] Provide detailed instructions to run SCNN-Tensorflow in TuSimple and BDD100K
+- [ ] Upload our light-weight model (ENet-SAD) and its training & testing scripts
 
 # Content
 
