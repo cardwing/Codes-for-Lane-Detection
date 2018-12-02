@@ -73,14 +73,14 @@ The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
 
 |Model|Accuracy|FP|FN|
 |:---:|:---:|:---:|:---:|
-|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|96.53%|0.0617|0.0180|
+|[SCNN-Torch](https://github.com/XingangPan/SCNN)|96.53%|0.0617|0.0180|
 |SCNN-Tensorflow|--|--|--|
 
-The pre-trained model for testing is here. (coming soon!)
+The pre-trained model for testing is here. (coming soon!) Note that in TuSimple, SCNN-Torch is based on ResNet-101 while SCNN-Tensorflow is based on VGG-16. In CULane and BDD100K, both SCNN-Torch and SCNN-Tensorflow are based on VGG-16.
 
 2. CULane testing set (F1-measure):
 
-|Category|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|SCNN-Tensorflow|
+|Category|[SCNN-Torch](https://github.com/XingangPan/SCNN)|SCNN-Tensorflow|
 |:---:|:---:|:---:|
 |Normal|90.6|90.2|
 |Crowded|69.7|71.9|
@@ -99,7 +99,7 @@ The pre-trained model for testing is [here](https://drive.google.com/open?id=1-E
 
 |Model|Accuracy|IoU|
 |:---:|:---:|:---:|
-|[SCNN-Torch](https://arxiv.org/pdf/1712.06080.pdf)|35.79%|15.84|
+|[SCNN-Torch](https://github.com/XingangPan/SCNN)|35.79%|15.84|
 |SCNN-Tensorflow|--|--|
 
 The accuracy and IoU of lane pixels are computed. The pre-trained model for testing is here. (coming soon!)
