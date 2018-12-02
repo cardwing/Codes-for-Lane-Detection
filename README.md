@@ -1,11 +1,5 @@
 Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Understanding"](https://arxiv.org/abs/1712.06080). (SCNN-Tensorflow) 
 
-# To-Do List
-
-- [ ] Test SCNN-Tensorflow in TuSimple and BDD100K
-- [ ] Provide detailed instructions to run SCNN-Tensorflow in TuSimple and BDD100K
-- [ ] Upload our light-weight model (ENet-SAD) and its training & testing scripts
-
 # Content
 
 * [Installation](#Installation)
@@ -127,3 +121,8 @@ This repo is built upon [SCNN](https://github.com/XingangPan/SCNN) and [LaneNet]
 
 ## Contact
 If you have any problems in reproducing the results, just raise an issue in this repo.
+
+## To-Do List
+- [ ] Test SCNN-Tensorflow in TuSimple and BDD100K
+- [ ] Provide detailed instructions to run SCNN-Tensorflow in TuSimple and BDD100K
+- [ ] Upload our light-weight model (ENet-SAD) and its training & testing scripts
