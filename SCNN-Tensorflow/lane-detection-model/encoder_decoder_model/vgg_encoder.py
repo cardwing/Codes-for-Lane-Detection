@@ -14,6 +14,8 @@ import math
 import tensorflow as tf
 
 from encoder_decoder_model import cnn_basenet
+from config import global_config
+CFG = global_config.cfg
 
 
 class VGG16Encoder(cnn_basenet.CNNBaseModel):
@@ -215,16 +217,17 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             # down to top #
             feature_list_old = feature_list_new
             feature_list_new = []
-            feature_list_new.append(feature_list_old[35])
+            length = int(CFG.TRAIN.IMG_HEIGHT / 8) - 1
+            feature_list_new.append(feature_list_old[length])
 
             w2 = tf.get_variable('W2', [1, 9, 128, 128], initializer=tf.random_normal_initializer(0, math.sqrt(2.0 / (9 * 128 * 128 * 5) ) ) )
             with tf.variable_scope("convs_6_2"):
-                conv_6_2 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_old[35], w2, [1, 1, 1, 1], 'SAME')), feature_list_old[34])
+                conv_6_2 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_old[length], w2, [1, 1, 1, 1], 'SAME')), feature_list_old[length - 1])
                 feature_list_new.append(conv_6_2)
 
             for cnt in range(2, conv_5_5.get_shape().as_list()[1]):
                 with tf.variable_scope("convs_6_2", reuse=True):
-                    conv_6_2 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w2, [1, 1, 1, 1], 'SAME')), feature_list_old[35-cnt])
+                    conv_6_2 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w2, [1, 1, 1, 1], 'SAME')), feature_list_old[length-cnt])
                     feature_list_new.append(conv_6_2)
                        
             feature_list_new.reverse() 
@@ -254,16 +257,17 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
 
             feature_list_old = feature_list_new
             feature_list_new = []
-            feature_list_new.append(feature_list_old[99])
+            length = int(CFG.TRAIN.IMG_WIDTH / 8) - 1
+            feature_list_new.append(feature_list_old[length])
 
             w4 = tf.get_variable('W4', [9, 1, 128, 128], initializer=tf.random_normal_initializer(0, math.sqrt(2.0 / (9 * 128 * 128 * 5) ) ) )
             with tf.variable_scope("convs_6_4"):
-                conv_6_4 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_old[99], w4, [1, 1, 1, 1], 'SAME')), feature_list_old[98])
+                conv_6_4 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_old[length], w4, [1, 1, 1, 1], 'SAME')), feature_list_old[length - 1])
                 feature_list_new.append(conv_6_4)
 
             for cnt in range(2, processed_feature.get_shape().as_list()[2]):
                 with tf.variable_scope("convs_6_4", reuse=True):
-                    conv_6_4 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w4, [1, 1, 1, 1], 'SAME')), feature_list_old[99-cnt])
+                    conv_6_4 = tf.add(tf.nn.relu(tf.nn.conv2d(feature_list_new[cnt-1], w4, [1, 1, 1, 1], 'SAME')), feature_list_old[length-cnt])
                     feature_list_new.append(conv_6_4)
                        
             feature_list_new.reverse() 
@@ -279,7 +283,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             conv_output = self.conv2d(inputdata=dropout_output, out_channel=5,
                                kernel_size=1, use_bias=True, name='conv_6')
 
-            ret['prob_output'] = tf.image.resize_images(conv_output, [288, 800])
+            ret['prob_output'] = tf.image.resize_images(conv_output, [CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH])
 
             ### add lane existence prediction branch ###
 
@@ -300,7 +304,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
         return ret
 
 if __name__ == '__main__':
-    a = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 3], name='input')
+    a = tf.placeholder(dtype=tf.float32, shape=[CFG.TRAIN.BATCH_SIZE, CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH, 3], name='input')
     encoder = VGG16Encoder(phase=tf.constant('train', dtype=tf.string))
     ret = encoder.encode(a, name='encode')
     print(ret)

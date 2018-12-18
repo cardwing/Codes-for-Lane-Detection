@@ -12,6 +12,8 @@ import tensorflow as tf
 
 from encoder_decoder_model import vgg_encoder
 from encoder_decoder_model import cnn_basenet
+from config import global_config
+CFG = global_config.cfg
 
 
 class LaneNet(cnn_basenet.CNNBaseModel):
@@ -141,9 +143,9 @@ class LaneNet(cnn_basenet.CNNBaseModel):
 
 if __name__ == '__main__':
     model = LaneNet(tf.constant('train', dtype=tf.string))
-    input_tensor = tf.placeholder(dtype=tf.float32, shape=[8, 288, 800, 3], name='input')
-    binary_label = tf.placeholder(dtype=tf.int64, shape=[8, 288, 800, 1], name='label')
-    existence_label_tensor = tf.placeholder(dtype=tf.float32, shape=[8, 4], name='existence')
+    input_tensor = tf.placeholder(dtype=tf.float32, shape=[CFG.TRAIN.BATCH_SIZE, CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH, 3], name='input')
+    binary_label = tf.placeholder(dtype=tf.int64, shape=[CFG.TRAIN.BATCH_SIZE, CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH, 1], name='label')
+    existence_label_tensor = tf.placeholder(dtype=tf.float32, shape=[CFG.TRAIN.BATCH_SIZE, 4], name='existence')
     ret = model.compute_loss(input_tensor=input_tensor, binary_label=binary_label,
                              existence_label=existence_label_tensor, name='loss')
     print(ret['total_loss'])

@@ -44,9 +44,9 @@ __C.TRAIN.LR_DECAY_RATE = 0.1
 # Set the class numbers
 __C.TRAIN.CLASSES_NUMS = 2
 # Set the image height
-__C.TRAIN.IMG_HEIGHT = 288 # 256
+__C.TRAIN.IMG_HEIGHT = 384 # 256
 # Set the image width
-__C.TRAIN.IMG_WIDTH = 800 # 512
+__C.TRAIN.IMG_WIDTH = 608 # 512
 
 # Test options
 __C.TEST = edict()
