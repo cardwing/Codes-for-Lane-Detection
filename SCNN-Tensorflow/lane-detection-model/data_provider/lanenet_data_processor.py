@@ -8,15 +8,12 @@
 """
 实现LaneNet的数据解析类
 """
-import os.path as ops
+import tensorflow as tf
 
-import cv2
-import numpy as np
+from config import global_config
 
-try:
-    from cv2 import cv2
-except ImportError:
-    pass
+CFG = global_config.cfg
+VGG_MEAN = [103.939, 116.779, 123.68]
 
 
 class DataSet(object):
@@ -26,91 +23,73 @@ class DataSet(object):
 
     def __init__(self, dataset_info_file):
         """
-
         :param dataset_info_file:
         """
-        self._gt_img_list, \
-        self._gt_label_instance_list, self._gt_label_existence_list = self._init_dataset(dataset_info_file)
-        self._random_dataset()
-        self._next_batch_loop_count = 0
+        self._len = 0
+        self.dataset_info_file = dataset_info_file
+        self._img, self._label_instance, self._label_existence = self._init_dataset()
 
-    def _init_dataset(self, dataset_info_file):
+    def __len__(self):
+        return self._len
+
+    def distorted_inputs(self):
+        pass
+
+    @staticmethod
+    def process_img(img_queue):
+        img_raw = tf.read_file(img_queue)
+        img_decoded = tf.image.decode_jpeg(img_raw, channels=3)
+        img_resized = tf.image.resize_images(img_decoded, [CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH],
+                                             method=tf.image.ResizeMethod.BICUBIC)
+        img_casted = tf.cast(img_resized, tf.float32)
+        return tf.subtract(img_casted, VGG_MEAN)
+
+    @staticmethod
+    def process_label_instance(label_instance_queue):
+        label_instance_raw = tf.read_file(label_instance_queue)
+        label_instance_decoded = tf.image.decode_png(label_instance_raw, channels=1)
+        label_instance_resized = tf.image.resize_images(label_instance_decoded,
+                                                        [CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH],
+                                                        method=tf.image.ResizeMethod.BICUBIC)
+        return tf.cast(label_instance_resized, tf.int32)
+
+    @staticmethod
+    def process_label_existence(label_existence_queue):
+        return tf.cast(label_existence_queue, tf.float32)
+
+    def _init_dataset(self):
         """
-
-        :param dataset_info_file:
         :return:
         """
-        gt_img_list = []
-        gt_label_instance_list = []
-        gt_label_existence_list = []
+        if not tf.gfile.Exists(self.dataset_info_file):
+            raise ValueError('Failed to find file: ' + self.dataset_info_file)
 
-        assert ops.exists(dataset_info_file), '{:s}　不存在'.format(dataset_info_file)
+        img_list = []
+        label_instance_list = []
+        label_existence_list = []
 
-        with open(dataset_info_file, 'r') as file:
+        with open(self.dataset_info_file, 'r') as file:
             for _info in file:
                 info_tmp = _info.strip(' ').split()
 
-                gt_img_list.append(info_tmp[0][1:])
-                gt_label_instance_list.append(info_tmp[1][1:])
-                gt_label_existence_list.append([int(info_tmp[2]), int(info_tmp[3]), int(info_tmp[4]), int(info_tmp[5])])
+                img_list.append(info_tmp[0][1:])
+                label_instance_list.append(info_tmp[1][1:])
+                label_existence_list.append([int(info_tmp[2]), int(info_tmp[3]), int(info_tmp[4]), int(info_tmp[5])])
 
-        return gt_img_list, gt_label_instance_list, gt_label_existence_list
+        self._len = len(img_list)
+        # img_queue = tf.train.string_input_producer(img_list)
+        # label_instance_queue = tf.train.string_input_producer(label_instance_list)
+        with tf.name_scope('data_augmentation'):
+            image_tensor = tf.convert_to_tensor(img_list)
+            label_instance_tensor = tf.convert_to_tensor(label_instance_list)
+            label_existence_tensor = tf.convert_to_tensor(label_existence_list)
+            input_queue = tf.train.slice_input_producer([image_tensor, label_instance_tensor, label_existence_tensor])
+            img = self.process_img(input_queue[0])
+            label_instance = self.process_label_instance(input_queue[1])
+            label_existence = self.process_label_existence(input_queue[2])
 
-    def _random_dataset(self):
-        """
-
-        :return:
-        """
-        assert len(self._gt_img_list) == len(self._gt_label_instance_list) == len(self._gt_label_existence_list)
-
-        random_idx = np.random.permutation(len(self._gt_img_list))
-        new_gt_img_list = []
-        new_gt_label_instance_list = []
-        new_gt_label_existence_list = []
-
-        for index in random_idx:
-            new_gt_img_list.append(self._gt_img_list[index])
-            new_gt_label_instance_list.append(self._gt_label_instance_list[index])
-            new_gt_label_existence_list.append(self._gt_label_existence_list[index])
-
-        self._gt_img_list = new_gt_img_list
-        self._gt_label_instance_list = new_gt_label_instance_list
-        self._gt_label_existence_list = new_gt_label_existence_list
+        return img, label_instance, label_existence
 
     def next_batch(self, batch_size):
-        """
-
-        :param batch_size:
-        :return:
-        """
-        assert len(self._gt_label_instance_list) == len(self._gt_label_existence_list) \
-               == len(self._gt_img_list)
-
-        idx_start = batch_size * self._next_batch_loop_count
-        idx_end = batch_size * self._next_batch_loop_count + batch_size
-
-        if idx_end > len(self._gt_label_instance_list):
-            self._random_dataset()
-            self._next_batch_loop_count = 0
-            return self.next_batch(batch_size)
-        else:
-            gt_img_list = self._gt_img_list[idx_start:idx_end]
-            gt_label_instance_list = self._gt_label_instance_list[idx_start:idx_end]
-            gt_label_existence_list = self._gt_label_existence_list[idx_start:idx_end]
-
-            gt_imgs = []
-            gt_labels_instance = []
-            gt_labels_existence = []
-
-            for gt_img_path in gt_img_list:
-                gt_imgs.append(cv2.imread(gt_img_path, cv2.IMREAD_COLOR))
-
-            for gt_label_path in gt_label_instance_list:
-                label_img = cv2.imread(gt_label_path, cv2.IMREAD_UNCHANGED)
-                gt_labels_instance.append(label_img)
-
-            gt_labels_existence = gt_label_existence_list
-
-            self._next_batch_loop_count += 1
-            return gt_imgs, gt_labels_instance, gt_labels_existence
-
+        return tf.train.batch([self._img, self._label_instance, self._label_existence], batch_size=batch_size,
+                              num_threads=CFG.TRAIN.CPU_NUM)
