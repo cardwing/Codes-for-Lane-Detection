@@ -204,7 +204,7 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
 
     grads = average_gradients(tower_grads)
 
-    train_op = optimizer.apply_gradients(grads)
+    train_op = optimizer.apply_gradients(grads, global_step=global_step)
 
     train_cost_time_mean = []
     train_instance_loss_mean = []
