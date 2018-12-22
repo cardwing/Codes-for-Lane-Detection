@@ -2,9 +2,7 @@ Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Un
 
 # News
 
-Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.  
-
-To use the pre-trained testing model, you can use the old version of the code in Dec 12, 2018. If you train the model from the vgg.npy, you can use the current testing code.
+Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
 
 # Content
 

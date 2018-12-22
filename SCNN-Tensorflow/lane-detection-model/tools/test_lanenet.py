@@ -49,7 +49,7 @@ def init_args():
     return parser.parse_args()
 
 
-def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size):
+def test_lanenet(image_path, weights_path, use_gpu, image_list):
     """
 
     :param image_path:
@@ -59,19 +59,15 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size):
     """
 
     test_dataset = lanenet_data_processor_test.DataSet(image_path)
-
-
-    input_tensor = tf.placeholder(dtype=tf.float32, shape=[batch_size, 288, 800, 3], name='input_tensor')
+    input_tensor = tf.placeholder(dtype=tf.float32, shape=[CFG.TEST.BATCH_SIZE, CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH, 3], name='input_tensor')
     phase_tensor = tf.constant('test', tf.string)
-
-    net = lanenet_merge_model.LaneNet(phase=phase_tensor, net_flag='vgg')
-    binary_seg_ret, instance_seg_ret = net.inference(input_tensor=input_tensor, name='lanenet_loss')
-
+    net = lanenet_merge_model.LaneNet()
+    with tf.variable_scope('lanenet_loss'):
+        infer_ret = net.inference(input_tensor, phase_tensor)
+    binary_seg_ret, instance_seg_ret = infer_ret['prob_output'], infer_ret['existence_output']
     initial_var = tf.global_variables()
     final_var = initial_var[:-1]
-
     saver = tf.train.Saver(final_var)
-
     # Set sess configuration
     if use_gpu:
         sess_config = tf.ConfigProto(device_count={'GPU': 1})
@@ -80,17 +76,13 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size):
     sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.TEST.GPU_MEMORY_FRACTION
     sess_config.gpu_options.allow_growth = CFG.TRAIN.TF_ALLOW_GROWTH
     sess_config.gpu_options.allocator_type = 'BFC'
-
     sess = tf.Session(config=sess_config)
-
     with sess.as_default():
-
         sess.run(tf.global_variables_initializer())
-
         saver.restore(sess=sess, save_path=weights_path)
-        for i in range(int(len(image_list) / batch_size)):
+        for i in range(int(len(image_list) / CFG.TEST.BATCH_SIZE)):
             print(i)
-            gt_imgs = test_dataset.next_batch(CFG.TRAIN.BATCH_SIZE)
+            gt_imgs = test_dataset.next_batch(CFG.TEST.BATCH_SIZE)
             gt_imgs = [cv2.resize(tmp,
                                   dsize=(CFG.TRAIN.IMG_WIDTH, CFG.TRAIN.IMG_HEIGHT),
                                   dst=tmp,
@@ -100,9 +92,8 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size):
 
             instance_seg_image, existence_output = sess.run([binary_seg_ret, instance_seg_ret],
                                                         feed_dict={input_tensor: gt_imgs})
-
-            for cnt in range(batch_size):
-                image_name = image_list[i * batch_size + cnt]
+            for cnt in range(CFG.TEST.BATCH_SIZE):
+                image_name = image_list[i * CFG.TEST.BATCH_SIZE + cnt]
                 image_prefix = image_name[:-10]
                 directory = 'predicts_SCNN_test_final/vgg_SCNN_DULR_w9' + image_prefix
                 if not os.path.exists(directory):
@@ -114,11 +105,8 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size):
                         file_exist.write('1 ')
                     else:
                         file_exist.write('0 ')
-                    
                 file_exist.close()
-                                 
     sess.close()
-    
     return
 
 
@@ -135,4 +123,4 @@ if __name__ == '__main__':
         for line in g.readlines():
             img_name.append(line.strip())
 
-    test_lanenet(args.image_path, args.weights_path, args.use_gpu, img_name, args.batch_size)
+    test_lanenet(args.image_path, args.weights_path, args.use_gpu, img_name)
