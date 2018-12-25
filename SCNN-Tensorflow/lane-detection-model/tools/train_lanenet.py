@@ -253,7 +253,7 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
 
             _, c, train_accuracy, train_accuracy_back, train_instance_loss, train_existence_loss, _ = \
                 sess.run([train_op, total_loss, accuracy, accuracy_back, instance_loss, existence_loss, out_logits_out],
-                         feed_dict={phase: 'test'})
+                         feed_dict={phase: 'train'})
 
             cost_time = time.time() - t_start
             train_cost_time_mean.append(cost_time)
