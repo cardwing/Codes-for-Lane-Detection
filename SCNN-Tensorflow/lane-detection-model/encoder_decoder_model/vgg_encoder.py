@@ -112,11 +112,10 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
         根据vgg16框架对输入的tensor进行编码
         :param input_tensor:
         :param name:
-        :param flags:
         :return: 输出vgg16编码特征
         """
         ret = OrderedDict()
-        with tf.variable_scope('encode'):
+        with tf.variable_scope(name):
             # conv stage 1_1
             conv_1_1 = self._conv_stage(input_tensor=input_tensor, k_size=3,
                                         out_dims=64, name='conv1_1')
@@ -311,7 +310,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
 
             ret['existence_output'] = existence_output
 
-            return ret
+        return ret
 
 
 if __name__ == '__main__':
