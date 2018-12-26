@@ -237,7 +237,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             feature_list_new.reverse()
 
             processed_feature = tf.stack(feature_list_new, axis=1)
-            processed_feature = tf.squeeze(processed_feature)
+            processed_feature = tf.squeeze(processed_feature, axis=2)
 
             # left to right #
 
@@ -282,7 +282,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
 
             feature_list_new.reverse()
             processed_feature = tf.stack(feature_list_new, axis=2)
-            processed_feature = tf.squeeze(processed_feature)
+            processed_feature = tf.squeeze(processed_feature, axis=3)
 
             #######################
 
@@ -297,12 +297,12 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             ### add lane existence prediction branch ###
 
             # spatial softmax #
-            N, H, W, C = conv_output.get_shape().as_list()
             features = conv_output  # N x H x W x C
             softmax = tf.nn.softmax(features)
 
             avg_pool = self.avgpooling(softmax, kernel_size=2, stride=2)
-            reshape_output = tf.reshape(avg_pool, [N, -1])
+            _, H, W, C = avg_pool.get_shape().as_list()
+            reshape_output = tf.reshape(avg_pool, [-1, H * W * C])
             fc_output = self.fullyconnect(reshape_output, 128)
             relu_output = self.relu(inputdata=fc_output, name='relu6')
             fc_output = self.fullyconnect(relu_output, 4)

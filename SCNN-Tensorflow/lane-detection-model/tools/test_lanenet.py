@@ -11,14 +11,9 @@
 import os
 import os.path as ops
 import argparse
-import time
 import math
-
 import tensorflow as tf
-import glob
 import glog as log
-import numpy as np
-import matplotlib.pyplot as plt
 import cv2
 try:
     from cv2 import cv2
@@ -28,6 +23,7 @@ except ImportError:
 from lanenet_model import lanenet_merge_model
 from config import global_config
 from data_provider import lanenet_data_processor_test
+
 
 CFG = global_config.cfg
 VGG_MEAN = [103.939, 116.779, 123.68]
@@ -58,13 +54,9 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size, save
     """
 
     test_dataset = lanenet_data_processor_test.DataSet(image_path, batch_size)
-    input_tensor = tf.placeholder(dtype=tf.string, shape=[batch_size], name='input_tensor')
-    imgs = []
-    for i in range(batch_size):
-        imgs.append(test_dataset.process_img(input_tensor[i]))
+    input_tensor = tf.placeholder(dtype=tf.string, shape=[None], name='input_tensor')
+    imgs = tf.map_fn(test_dataset.process_img, input_tensor, dtype=tf.float32)
     phase_tensor = tf.constant('test', tf.string)
-
-    imgs = tf.convert_to_tensor(imgs)
 
     net = lanenet_merge_model.LaneNet()
     binary_seg_ret, instance_seg_ret = net.test_inference(imgs, phase_tensor, 'lanenet_loss')
@@ -90,14 +82,12 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size, save
         sess.run(tf.global_variables_initializer())
 
         saver.restore(sess=sess, save_path=weights_path)
-        for i in range(int(len(image_list) / batch_size)):
+        for i in range(math.ceil(len(image_list) / batch_size)):
             print(i)
             paths = test_dataset.next_batch()
             instance_seg_image, existence_output = sess.run([binary_seg_ret, instance_seg_ret],
                                                             feed_dict={input_tensor: paths})
-
-            for cnt in range(batch_size):
-                image_name = paths[cnt]
+            for cnt, image_name in enumerate(paths):
                 print(image_name)
                 parent_path = os.path.dirname(image_name)
                 directory = os.path.join(save_dir, 'vgg_SCNN_DULR_w9', parent_path)

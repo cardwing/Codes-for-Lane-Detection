@@ -70,7 +70,7 @@ class DataSet(object):
         idx_end = self._batch_size * self._next_batch_loop_count + self._batch_size
 
         if idx_end > len(self):
-            idx_end = len(self) - 1
+            idx_end = len(self)
 
         img_list = self._img_list[idx_start:idx_end]
         self._next_batch_loop_count += 1

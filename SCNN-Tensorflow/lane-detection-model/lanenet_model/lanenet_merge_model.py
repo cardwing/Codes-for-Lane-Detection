@@ -63,7 +63,7 @@ class LaneNet(cnn_basenet.CNNBaseModel):
                         'SAME')
                     prob_list.append(prob_smooth)
             processed_prob = tf.stack(prob_list, axis=4)
-            processed_prob = tf.squeeze(processed_prob)
+            processed_prob = tf.squeeze(processed_prob, axis=3)
             binary_seg_ret = processed_prob
 
             # Predict lane existence:
