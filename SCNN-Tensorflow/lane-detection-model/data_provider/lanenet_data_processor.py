@@ -50,7 +50,7 @@ class DataSet(object):
         label_instance_decoded = tf.image.decode_png(label_instance_raw, channels=1)
         label_instance_resized = tf.image.resize_images(label_instance_decoded,
                                                         [CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH],
-                                                        method=tf.image.ResizeMethod.BICUBIC)
+                                                        method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
         return tf.cast(label_instance_resized, tf.int32)
 
     @staticmethod
