@@ -2,6 +2,8 @@ Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Un
 
 # News
 
+There is a bug in the current code, please refer to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/31). I am working on this bug and will fix it soon.
+
 Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
 
 # Content
