@@ -9,20 +9,15 @@
 训练lanenet模型
 """
 import argparse
-import math
 import os
 import os.path as ops
 import time
 
-import cv2
 import glog as log
 import numpy as np
 import tensorflow as tf
 
-try:
-    from cv2 import cv2
-except ImportError:
-    pass
+import sys
 
 from config import global_config
 from lanenet_model import lanenet_merge_model
@@ -81,24 +76,18 @@ def average_gradients(tower_grads):
     return average_grads
 
 
-def forward(batch_queue, net, phase, optimizer=None):
+def forward(batch_queue, net, phase, scope, optimizer=None):
     img_batch, label_instance_batch, label_existence_batch = batch_queue.dequeue()
-    inference = net.inference(img_batch, phase)
-    compute_ret = net.loss(inference, label_instance_batch, label_existence_batch)
-    total_loss = compute_ret['total_loss']
-    tf.get_variable_scope().reuse_variables()
-    if optimizer is not None:
-        grads = optimizer.compute_gradients(total_loss)
-    else:
-        grads = None
-    instance_loss = compute_ret['instance_seg_loss']
-    existence_loss = compute_ret['existence_pre_loss']
+    inference = net.inference(img_batch, phase, 'lanenet_loss')
+    _ = net.loss(inference, label_instance_batch, label_existence_batch, 'lanenet_loss')
+    total_loss = tf.add_n(tf.get_collection('total_loss', scope))
+    instance_loss = tf.add_n(tf.get_collection('instance_seg_loss', scope))
+    existence_loss = tf.add_n(tf.get_collection('existence_pre_loss', scope))
 
+    out_logits = tf.add_n(tf.get_collection('instance_seg_logits', scope))
     # calculate the accuracy
-    out_logits = compute_ret['instance_seg_logits']
     out_logits = tf.nn.softmax(logits=out_logits)
     out_logits_out = tf.argmax(out_logits, axis=-1)
-    out_logits_out = tf.reshape(out_logits_out, tf.shape(label_instance_batch))
 
     pred_0 = tf.count_nonzero(tf.multiply(tf.cast(tf.equal(label_instance_batch, 0), tf.int32),
                                           tf.cast(tf.equal(out_logits_out, 0), tf.int32)),
@@ -160,6 +149,15 @@ def forward(batch_queue, net, phase, optimizer=None):
     return total_loss, instance_loss, existence_loss, accuracy, accuracy_back, IoU, out_logits_out, grads
 
 
+    tf.get_variable_scope().reuse_variables()
+
+    if optimizer is not None:
+        grads = optimizer.compute_gradients(total_loss)
+    else:
+        grads = None
+    return total_loss, instance_loss, existence_loss, accuracy, accuracy_back, IoU, out_logits_out, grads
+
+
 def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
     train_dataset_file = ops.join(dataset_dir, 'train_gt.txt')
     val_dataset_file = ops.join(dataset_dir, 'val_gt.txt')
@@ -180,27 +178,24 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
     learning_rate = tf.train.polynomial_decay(CFG.TRAIN.LEARNING_RATE, global_step,
                                               CFG.TRAIN.EPOCHS, power=0.9)
 
-    update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-    with tf.control_dependencies(update_ops):
-        optimizer = tf.train.MomentumOptimizer(learning_rate=
-                                               learning_rate, momentum=0.9)
+    optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate, momentum=0.9)
     img, label_instance, label_existence = train_dataset.next_batch(CFG.TRAIN.BATCH_SIZE)
     batch_queue = tf.contrib.slim.prefetch_queue.prefetch_queue(
         [img, label_instance, label_existence], capacity=2 * CFG.TRAIN.GPU_NUM, num_threads=CFG.TRAIN.CPU_NUM)
 
-    val_img, val_label_instance, val_label_existence = val_dataset.next_batch(CFG.TRAIN.BATCH_SIZE)
+    val_img, val_label_instance, val_label_existence = val_dataset.next_batch(CFG.TRAIN.VAL_BATCH_SIZE)
     val_batch_queue = tf.contrib.slim.prefetch_queue.prefetch_queue(
         [val_img, val_label_instance, val_label_existence], capacity=2 * CFG.TRAIN.GPU_NUM,
         num_threads=CFG.TRAIN.CPU_NUM)
     with tf.variable_scope(tf.get_variable_scope()):
         for i in range(CFG.TRAIN.GPU_NUM):
             with tf.device('/gpu:%d' % i):
-                with tf.name_scope('tower_%d' % i):
+                with tf.name_scope('tower_%d' % i) as scope:
                     total_loss, instance_loss, existence_loss, accuracy, accuracy_back, _, out_logits_out, \
-                        grad = forward(batch_queue, net, phase, optimizer)
+                        grad = forward(batch_queue, net, phase, scope, optimizer)
                     tower_grads.append(grad)
                     val_op_total_loss, val_op_instance_loss, val_op_existence_loss, val_op_accuracy, \
-                        val_op_accuracy_back, val_op_IoU, _, _ = forward(val_batch_queue, net, phase)
+                        val_op_accuracy_back, val_op_IoU, _, _ = forward(val_batch_queue, net, phase, scope)
 
     grads = average_gradients(tower_grads)
 
@@ -256,7 +251,7 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
         for epoch in range(CFG.TRAIN.EPOCHS):
             t_start = time.time()
 
-            _, c, train_accuracy, train_accuracy_back, train_instance_loss, train_existence_loss, binary_seg_img = \
+            _, c, train_accuracy, train_accuracy_back, train_instance_loss, train_existence_loss, _ = \
                 sess.run([train_op, total_loss, accuracy, accuracy_back, instance_loss, existence_loss, out_logits_out],
                          feed_dict={phase: 'train'})
 

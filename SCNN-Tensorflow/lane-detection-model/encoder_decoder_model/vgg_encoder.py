@@ -112,11 +112,10 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
         根据vgg16框架对输入的tensor进行编码
         :param input_tensor:
         :param name:
-        :param flags:
         :return: 输出vgg16编码特征
         """
         ret = OrderedDict()
-        with tf.variable_scope('encode'):
+        with tf.variable_scope(name):
             # conv stage 1_1
             conv_1_1 = self._conv_stage(input_tensor=input_tensor, k_size=3,
                                         out_dims=64, name='conv1_1')
@@ -238,7 +237,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             feature_list_new.reverse()
 
             processed_feature = tf.stack(feature_list_new, axis=1)
-            processed_feature = tf.squeeze(processed_feature)
+            processed_feature = tf.squeeze(processed_feature, axis=2)
 
             # left to right #
 
@@ -283,7 +282,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
 
             feature_list_new.reverse()
             processed_feature = tf.stack(feature_list_new, axis=2)
-            processed_feature = tf.squeeze(processed_feature)
+            processed_feature = tf.squeeze(processed_feature, axis=3)
 
             #######################
 
@@ -298,12 +297,12 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
             ### add lane existence prediction branch ###
 
             # spatial softmax #
-            N, H, W, C = conv_output.get_shape().as_list()
             features = conv_output  # N x H x W x C
             softmax = tf.nn.softmax(features)
 
             avg_pool = self.avgpooling(softmax, kernel_size=2, stride=2)
-            reshape_output = tf.reshape(avg_pool, [N, -1])
+            _, H, W, C = avg_pool.get_shape().as_list()
+            reshape_output = tf.reshape(avg_pool, [-1, H * W * C])
             fc_output = self.fullyconnect(reshape_output, 128)
             relu_output = self.relu(inputdata=fc_output, name='relu6')
             fc_output = self.fullyconnect(relu_output, 4)
@@ -311,7 +310,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
 
             ret['existence_output'] = existence_output
 
-            return ret
+        return ret
 
 
 if __name__ == '__main__':

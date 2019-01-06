@@ -13,7 +13,7 @@ import tensorflow as tf
 from config import global_config
 
 CFG = global_config.cfg
-VGG_MEAN = [103.939, 116.779, 123.68]
+VGG_MEAN = [123.68, 116.779, 103.939]
 
 
 class DataSet(object):
@@ -31,9 +31,6 @@ class DataSet(object):
 
     def __len__(self):
         return self._len
-
-    def distorted_inputs(self):
-        pass
 
     @staticmethod
     def process_img(img_queue):

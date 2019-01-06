@@ -60,3 +60,5 @@ __C.TEST.GPU_MEMORY_FRACTION = 0.8
 __C.TEST.TF_ALLOW_GROWTH = True
 # Set the test batch size
 __C.TEST.BATCH_SIZE = 8
+# Set the test CPU thread number
+__C.TEST.CPU_NUM = 8

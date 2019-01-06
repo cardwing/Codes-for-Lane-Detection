@@ -288,9 +288,6 @@ class CNNBaseModel(object):
             # print('batch_normalization: test phase')
             return inputdata
 
-        input_shape = inputdata.get_shape().as_list()
-        noise_shape = tf.constant(value=[input_shape[0], 1, 1, input_shape[3]])
-
         output = tf.cond(is_training, f1, f2)
         # output = tf.nn.dropout(inputdata, keep_prob, noise_shape, name=name)
 

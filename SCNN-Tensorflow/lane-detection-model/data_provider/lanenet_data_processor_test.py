@@ -8,15 +8,12 @@
 """
 实现LaneNet的数据解析类
 """
-import os.path as ops
+import tensorflow as tf
 
-import cv2
-import numpy as np
+from config import global_config
 
-try:
-    from cv2 import cv2
-except ImportError:
-    pass
+CFG = global_config.cfg
+VGG_MEAN = [123.68, 116.779, 103.939]
 
 
 class DataSet(object):
@@ -24,67 +21,57 @@ class DataSet(object):
     实现数据集类
     """
 
-    def __init__(self, dataset_info_file):
+    def __init__(self, dataset_info_file, batch_size):
         """
 
         :param dataset_info_file:
         """
-        self._gt_img_list = self._init_dataset(dataset_info_file)
-        self._random_dataset()
+        self._dataset_info_file = dataset_info_file
+        self._batch_size = batch_size
+        self._img_list = self._init_dataset()
         self._next_batch_loop_count = 0
 
-    def _init_dataset(self, dataset_info_file):
-        """
+    def __len__(self):
+        return self._len
 
-        :param dataset_info_file:
+    def _init_dataset(self):
+        """
         :return:
         """
-        gt_img_list = []
+        img_list = []
 
-        assert ops.exists(dataset_info_file), '{:s}　不存在'.format(dataset_info_file)
+        if not tf.gfile.Exists(self._dataset_info_file):
+            raise ValueError('Failed to find file: ' + self._dataset_info_file)
 
-        with open(dataset_info_file, 'r') as file:
+        with open(self._dataset_info_file, 'r') as file:
             for _info in file:
                 info_tmp = _info.strip(' ').split()
-                gt_img_list.append(info_tmp[0][1:])
+                img_list.append(info_tmp[0][1:])
 
-        return gt_img_list
+        self._len = len(img_list)
 
-    def _random_dataset(self):
+        return img_list
+
+    @staticmethod
+    def process_img(img_path):
+        img_raw = tf.read_file(img_path)
+        img_decoded = tf.image.decode_jpeg(img_raw, channels=3)
+        img_resized = tf.image.resize_images(img_decoded, [CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH],
+                                             method=tf.image.ResizeMethod.BICUBIC)
+        img_casted = tf.cast(img_resized, tf.float32)
+        return tf.subtract(img_casted, VGG_MEAN)
+
+    def next_batch(self):
         """
-
         :return:
         """
 
-        random_idx = np.random.permutation(len(self._gt_img_list))
-        new_gt_img_list = []
+        idx_start = self._batch_size * self._next_batch_loop_count
+        idx_end = self._batch_size * self._next_batch_loop_count + self._batch_size
 
-        for index in random_idx:
-            new_gt_img_list.append(self._gt_img_list[index])
+        if idx_end > len(self):
+            idx_end = len(self)
 
-        self._gt_img_list = new_gt_img_list
-
-    def next_batch(self, batch_size):
-        """
-
-        :param batch_size:
-        :return:
-        """
-
-        idx_start = batch_size * self._next_batch_loop_count
-        idx_end = batch_size * self._next_batch_loop_count + batch_size
-
-        if idx_end > len(self._gt_img_list):
-            self._random_dataset()
-            self._next_batch_loop_count = 0
-            return self.next_batch(batch_size)
-        else:
-            gt_img_list = self._gt_img_list[idx_start:idx_end]
-            gt_imgs = []
-
-            for gt_img_path in gt_img_list:
-                gt_imgs.append(cv2.imread(gt_img_path, cv2.IMREAD_COLOR))
-
-
-            self._next_batch_loop_count += 1
-            return gt_imgs
+        img_list = self._img_list[idx_start:idx_end]
+        self._next_batch_loop_count += 1
+        return img_list
