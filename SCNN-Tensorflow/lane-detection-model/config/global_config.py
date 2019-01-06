@@ -47,9 +47,9 @@ __C.TRAIN.IMG_HEIGHT = 288  # 256
 # Set the image width
 __C.TRAIN.IMG_WIDTH = 800  # 512
 # Set GPU number
-__C.TRAIN.GPU_NUM = 1   # 8
+__C.TRAIN.GPU_NUM = 4   # 8
 # Set CPU thread number
-__C.TRAIN.CPU_NUM = 1   #
+__C.TRAIN.CPU_NUM = 4   #
 
 # Test options
 __C.TEST = edict()

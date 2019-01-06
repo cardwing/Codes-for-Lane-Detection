@@ -2,8 +2,6 @@ Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Un
 
 # News
 
-There is a bug in the current code, please refer to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/31). I am working on this bug and will fix it soon.
-
 Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
 
 # Content
@@ -58,7 +56,7 @@ The whole dataset is available at [BDD100K](http://bdd-data.berkeley.edu/).
 
 ## Test
     cd SCNN-Tensorflow/lane-detection-model
-    CUDA_VISIBLE_DEVICES="0" python tools/test_lanenet.py --weights_path path/to/model_weights_file --image_path path/to/image_name_list
+    CUDA_VISIBLE_DEVICES="0" python tools/test_lanenet.py --weights_path path/to/model_weights_file --image_path path/to/image_name_list --save_dir to_be_saved_dir
 
 Note that path/to/image_name_list should be like [test_img.txt](./SCNN-Tensorflow/lane-detection-model/demo_file/test_img.txt). Now, you get the probability maps from our model. To get the final performance, you need to follow [SCNN](https://github.com/XingangPan/SCNN) to get curve lines from probability maps as well as calculate precision, recall and F1-measure.
 
@@ -95,7 +93,7 @@ The pre-trained model for testing is here. (coming soon!) Note that in TuSimple,
 |Crossroad|1990|4137|
 |Total|71.6|71.3|
 
-The pre-trained model for testing is [here](https://drive.google.com/open?id=1-E0Bws7-v35vOVfqEXDTJdfovUTQ2sf5). You can further boost the performance by referring to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/5).
+The pre-trained model for testing is [here](https://drive.google.com/open?id=1-E0Bws7-v35vOVfqEXDTJdfovUTQ2sf5). Note that you need to exchange the order of VGG-MEAN in test_lanenet.py and change the order of input images from RGB to BGR since the pre-trained model uses opencv to read images. You can further boost the performance by referring to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/5).
 
 3. BDD100K testing set:
 

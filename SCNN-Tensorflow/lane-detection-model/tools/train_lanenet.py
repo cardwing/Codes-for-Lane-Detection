@@ -146,8 +146,6 @@ def forward(batch_queue, net, phase, scope, optimizer=None):
     IoU_4 = tf.divide(tf.cast(overlap_4, tf.float32), tf.cast(union_4, tf.float32))
 
     IoU = tf.reduce_mean(tf.stack([IoU_1, IoU_2, IoU_3, IoU_4]))
-    return total_loss, instance_loss, existence_loss, accuracy, accuracy_back, IoU, out_logits_out, grads
-
 
     tf.get_variable_scope().reuse_variables()
 

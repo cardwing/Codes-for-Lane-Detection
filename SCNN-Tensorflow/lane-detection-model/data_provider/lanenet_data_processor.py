@@ -48,6 +48,7 @@ class DataSet(object):
         label_instance_resized = tf.image.resize_images(label_instance_decoded,
                                                         [CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH],
                                                         method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+        label_instance_resized = tf.reshape(label_instance_resized, [CFG.TRAIN.IMG_HEIGHT, CFG.TRAIN.IMG_WIDTH])
         return tf.cast(label_instance_resized, tf.int32)
 
     @staticmethod

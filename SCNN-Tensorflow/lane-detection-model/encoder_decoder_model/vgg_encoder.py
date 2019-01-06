@@ -107,7 +107,7 @@ class VGG16Encoder(cnn_basenet.CNNBaseModel):
 
         return relu
 
-    def encode(self, input_tensor):
+    def encode(self, input_tensor, name):
         """
         根据vgg16框架对输入的tensor进行编码
         :param input_tensor:
