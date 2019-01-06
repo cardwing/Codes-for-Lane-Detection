@@ -45,14 +45,16 @@ def init_args():
     return parser.parse_args()
 
 
+
 def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size, save_dir):
+
     """
     :param image_path:
     :param weights_path:
     :param use_gpu:
     :return:
     """
-
+    
     test_dataset = lanenet_data_processor_test.DataSet(image_path, batch_size)
     input_tensor = tf.placeholder(dtype=tf.string, shape=[None], name='input_tensor')
     imgs = tf.map_fn(test_dataset.process_img, input_tensor, dtype=tf.float32)
@@ -60,12 +62,9 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size, save
 
     net = lanenet_merge_model.LaneNet()
     binary_seg_ret, instance_seg_ret = net.test_inference(imgs, phase_tensor, 'lanenet_loss')
-
     initial_var = tf.global_variables()
     final_var = initial_var[:-1]
-
     saver = tf.train.Saver(final_var)
-
     # Set sess configuration
     if use_gpu:
         sess_config = tf.ConfigProto(device_count={'GPU': 1})
@@ -74,13 +73,9 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size, save
     sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.TEST.GPU_MEMORY_FRACTION
     sess_config.gpu_options.allow_growth = CFG.TRAIN.TF_ALLOW_GROWTH
     sess_config.gpu_options.allocator_type = 'BFC'
-
     sess = tf.Session(config=sess_config)
-
     with sess.as_default():
-
         sess.run(tf.global_variables_initializer())
-
         saver.restore(sess=sess, save_path=weights_path)
         for i in range(math.ceil(len(image_list) / batch_size)):
             print(i)
@@ -101,11 +96,8 @@ def test_lanenet(image_path, weights_path, use_gpu, image_list, batch_size, save
                         file_exist.write('1 ')
                     else:
                         file_exist.write('0 ')
-                    
                 file_exist.close()
-                                 
     sess.close()
-    
     return
 
 
