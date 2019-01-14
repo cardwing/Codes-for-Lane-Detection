@@ -192,6 +192,7 @@ def train_net(dataset_dir, weights_path=None, net_flag='vgg'):
                     total_loss, instance_loss, existence_loss, accuracy, accuracy_back, _, out_logits_out, \
                         grad = forward(batch_queue, net, phase, scope, optimizer)
                     tower_grads.append(grad)
+                with tf.name_scope('test_%d' % i) as scope:
                     val_op_total_loss, val_op_instance_loss, val_op_existence_loss, val_op_accuracy, \
                         val_op_accuracy_back, val_op_IoU, _, _ = forward(val_batch_queue, net, phase, scope)
 
