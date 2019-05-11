@@ -118,6 +118,15 @@ If you use the codes, please cite the following publications:
   month = {February},  
   year = {2018}  
 }
+
+@misc{hou2019agnostic,
+    title={Agnostic Lane Detection},
+    author={Yuenan Hou},
+    year={2019},
+    eprint={1905.03704},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
 ```
 
 ## Acknowledgement
