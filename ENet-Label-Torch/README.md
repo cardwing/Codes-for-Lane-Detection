@@ -52,6 +52,6 @@ Please follow [SCNN-Torch](https://github.com/XingangPan/SCNN) to put CULane in 
     cd $ENet_ROOT
     sh ./experiments/train.sh
     ```
-    The training process should start and trained models would be saved in `$ENet_ROOT/experiments/models/vgg_SCNN_DULR_w9` by default.  
+    The training process should start and trained models would be saved in `experiments/models/vgg_SCNN_DULR_w9` by default.  
     Then you can test the trained model following the Testing steps above. If your model position or name is changed, remember to set them to yours accordingly.
 
