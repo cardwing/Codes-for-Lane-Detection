@@ -85,8 +85,8 @@ function Trainer:train(epoch, dataloader)
       N = N + batchSize
       lossSum = lossSum + Loss[1]*batchSize    -- loss for segmentation branch
       lossSum2 = lossSum2 + Loss[2]*batchSize    -- loss for classification branch
-      lossSum3 = lossSum3 + Loss[3]*batchSize    -- loss for segmentation branch
-      lossSum4 = lossSum4 + Loss[4]*batchSize    -- loss for classification branch      
+      lossSum3 = lossSum3 + Loss[3]*batchSize 
+      lossSum4 = lossSum4 + Loss[4]*batchSize      
       print((' | Epoch: [%d][%d/%d][%d]  Time %.2f  LR %.5f  Err1 %.5f (%.5f)  Err2 %.5f (%.5f) Err3 %.5f (%.5f) Err4 %.5f (%.5f)'):format(
             epoch, n, trainSize, self.iter, timer:time().real, self.optimState.learningRate, Loss[1], lossSum / N, Loss[2], lossSum2 / N, Loss[3], lossSum3 / N, Loss[4], lossSum4 / N))
 
@@ -144,8 +144,8 @@ function Trainer:test(epoch, dataloader)
       N = N + batchSize
       lossSum = lossSum + Loss[1]*batchSize
       lossSum2 = lossSum2 + Loss[2]*batchSize
-      lossSum3 = lossSum3 + Loss[3]*batchSize    -- loss for segmentation branch
-      lossSum4 = lossSum4 + Loss[4]*batchSize    -- loss for classification branch
+      lossSum3 = lossSum3 + Loss[3]*batchSize
+      lossSum4 = lossSum4 + Loss[4]*batchSize
       print((' | Test: [%d][%d/%d] Err1 %.5f (%.5f) Err2 %.5f (%.5f) Err3 %.5f (%.5f) Err4 %.5f (%.5f) Acc %.2f (%.3f) mRec %.2f (%.3f) mIOU %.2f (%.3f)'):format(
          epoch, n, size, Loss[1], lossSum / N, Loss[2], lossSum2 / N, Loss[3], lossSum3 / N, Loss[4], lossSum4 / N, accuracy, AccSum / N, avgRecall, RecSum / N, avgIOU, IOUSum / N))
 
