@@ -2,7 +2,9 @@ Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Un
 
 # News
 
-Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
+1. ENet-Label-Torch has been released. (ENet-label is a light-weight lane detection model based on [ENet](https://arxiv.org/abs/1606.02147))
+
+2. Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
 
 # Content
 
