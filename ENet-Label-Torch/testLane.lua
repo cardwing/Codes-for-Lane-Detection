@@ -21,6 +21,18 @@ if opt.smooth then
    offset = 1
 end
 
+-- Disable spatial dropouts for evaluation
+dropout_nodes, container_nodes = model:findModules('nn.SpatialDropout')
+for i = 1, #dropout_nodes do
+  -- Search the container for the current dropout node
+  for j = 1, #(container_nodes[i].modules) do
+    if container_nodes[i].modules[j] == dropout_nodes[i] then
+      -- Manually set dropout probability to 0
+      container_nodes[i].modules[j].p = 0
+    end
+  end
+end
+
 print(model)
 local valLoader = DataLoader.create(opt)
 print('data loaded')
