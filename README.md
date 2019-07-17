@@ -2,7 +2,11 @@ Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Un
 
 # News
 
-1. ENet-Label-Torch has been released. (ENet-label is a light-weight lane detection model based on [ENet](https://arxiv.org/abs/1606.02147) and adopts self attention distillation (more details can be seen in our paper). It has 20 × fewer parameters and runs 10 × faster compared to the state-of-the-art SCNN, and achieves 72.0 (F1-measure) on CULane testing set (better than SCNN which achieves 71.6). Do not hesitate to try our model!)
+1. ENet-Label-Torch has been released. 
+Key features:
+(1) ENet-label is a **light-weight** lane detection model based on [ENet](https://arxiv.org/abs/1606.02147) and adopts **self attention distillation** (more details can be found in our paper). 
+(2) It has **20** × fewer parameters and runs **10** × faster compared to the state-of-the-art SCNN, and achieves **72.0** (F1-measure) on CULane testing set (better than SCNN which achieves 71.6). 
+(Do not hesitate to try our model!!!)
 
 2. Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
 
@@ -84,18 +88,18 @@ The pre-trained model for testing is here. (coming soon!) Note that in TuSimple,
 
 |Category|[SCNN-Torch](https://github.com/XingangPan/SCNN)|SCNN-Tensorflow|ENet-Label-Torch|
 |:---:|:---:|:---:|:---:|
-|Normal|90.6|90.2|90.7|
+|Normal|90.6|90.2|**90.7**|
 |Crowded|69.7|71.9|70.8|
 |Night|66.1|64.6|65.9|
 |No line|43.4|45.8|44.7|
 |Shadow|66.9|73.8|70.6|
-|Arrow|84.1|83.8|85.8|
-|Dazzle light|58.5|59.5|64.4|
-|Curve|64.4|63.4|65.4|
+|Arrow|84.1|83.8|**85.8**|
+|Dazzle light|58.5|59.5|**64.4**|
+|Curve|64.4|63.4|**65.4**|
 |Crossroad|1990|4137|2729|
-|Total|71.6|71.3|72.0|
-|Runtime(ms)|133.5|--|13.4|
-|Parameter(M)|20.72|--|0.98|
+|Total|71.6|71.3|**72.0**|
+|Runtime(ms)|133.5|--|**13.4**|
+|Parameter(M)|20.72|--|**0.98**|
 
 The pre-trained model for testing is [here](https://drive.google.com/open?id=1-E0Bws7-v35vOVfqEXDTJdfovUTQ2sf5). Note that you need to exchange the order of VGG-MEAN in test_lanenet.py and change the order of input images from RGB to BGR since the pre-trained model uses opencv to read images. You can further boost the performance by referring to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/5).
 
