@@ -12,8 +12,8 @@ CUDA_VISIBLE_DEVICES="0,1" th main.lua \
    -nThreads 2 \
    -nGPU 2 \
    -batchSize 12 \
-   -maxIter 60000 \
-   -LR 0.001 \
+   -maxIter 100000 \
+   -LR 0.01 \
    -backWeight 0.4 \
    -nEpochs 100 \
 2>&1|tee experiments/models/${exp}/train.log
