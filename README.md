@@ -3,9 +3,13 @@ Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Un
 # News
 
 1. ENet-Label-Torch has been released. 
+
 Key features:
+
 (1) ENet-label is a **light-weight** lane detection model based on [ENet](https://arxiv.org/abs/1606.02147) and adopts **self attention distillation** (more details can be found in our paper). 
+
 (2) It has **20** × fewer parameters and runs **10** × faster compared to the state-of-the-art SCNN, and achieves **72.0** (F1-measure) on CULane testing set (better than SCNN which achieves 71.6). 
+
 (Do not hesitate to try our model!!!)
 
 2. Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
