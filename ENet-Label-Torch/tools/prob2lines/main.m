@@ -35,7 +35,7 @@ for i=1:num
     end
     if show
         img = imread(strcat(data, imname));
-        probMaps = uint8(zeros(288,800,3));
+        probMaps = uint8(zeros(208,976,3));
         figure(1)
         imshow(img); hold on;
         for j=1:4
@@ -43,7 +43,7 @@ for i=1:num
             if exist{j}=='1'
                 for m=1:pts
                     if coordinates(j,m)>0
-                        plot(uint16(coordinates(j,m)*1640/800),590-(m-1)*20,strcat('.',color(j)),'markersize',30);
+                        plot(uint16(coordinates(j,m)*1640/976),590-(m-1)*20,strcat('.',color(j)),'markersize',30);
                     end
                 end
             end
@@ -70,7 +70,7 @@ for i=1:num
             if exist{j}=='1' && sum(coordinates(j,:)>0)>1
                 for m=1:pts
                     if coordinates(j,m)>0
-                        fprintf(fp, '%d %d ', uint16(coordinates(j,m)*1640/800)-1, uint16(590-(m-1)*20)-1);
+                        fprintf(fp, '%d %d ', uint16(coordinates(j,m)*1640/976)-1, uint16(590-(m-1)*20)-1);
                     end
                 end
                 fprintf(fp, '\n');

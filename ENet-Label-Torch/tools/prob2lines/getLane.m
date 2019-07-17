@@ -3,7 +3,7 @@ function [ coordinate ] = getLane( score )
 thr = 0.3;
 coordinate = zeros(1,18);
 for i=1:18
-    lineId = uint16(288-(i-1)*20/590*288);
+    lineId = uint16(208-(i-1)*20/350*208);
     line = score(lineId,:);
     [value, id] = max(line);
     if double(value)/255 > thr

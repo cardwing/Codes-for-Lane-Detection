@@ -3,7 +3,7 @@ exp=vgg_SCNN_DULR_w9
 data=./data/CULane
 #rm gen/lane.t7
 th testLane.lua \
-	-model experiments/pretrained/ENet-label.t7 \
+	-model experiments/pretrained/ENet-label-new.t7 \
 	-data ${data} \
 	-val ${data}/list/test.txt \
 	-save experiments/predicts/${exp} \

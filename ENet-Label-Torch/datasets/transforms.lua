@@ -53,9 +53,13 @@ end
 function M.ScaleWH(w, h, interpolation)
    interpolation = interpolation or 'bicubic'
    return function(input, target, exist)
+      --- newly added part ---
+      input = image.crop(input, 0, 240, 1640, 590)
+      ------------------------
       if target == nil then
          return image.scale(input, w, h, interpolation)
       else
+         target = image.crop(target, 0, 240, 1640, 590)
          return image.scale(input, w, h, interpolation), image.scale(target, w, h, 'simple'), exist
       end
    end
@@ -197,6 +201,10 @@ end
 --Added by PanXingang. Resized with random scale and ratio
 function M.RandomScaleRatio(minW, maxW, minH, maxH)
    return function(input, target, exist)
+      --- newly added part ---
+      input = image.crop(input, 0, 240, 1640, 590)
+      target = image.crop(target, 0, 240, 1640, 590)
+      ------------------------
       local w, h = input:size(3), input:size(2)
 
       local targetW = torch.random(minW, maxW)

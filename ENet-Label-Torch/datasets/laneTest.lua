@@ -53,7 +53,7 @@ function LaneDataset:preprocess()
       }
    elseif self.split == 'val' then
       return t.Compose{
-         t.ScaleWH(800, 288),
+         t.ScaleWH(976, 208), -- 800, 288
          t.ColorNormalize(meanstd),
       }
    else

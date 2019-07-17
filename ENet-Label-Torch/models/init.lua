@@ -48,7 +48,7 @@ function M.setup(opt, checkpoint)
       model = model:get(1)
    end
 
-   concat_table_1 = nn.ConcatTable()
+   --[[concat_table_1 = nn.ConcatTable()
    concat_table_2 = nn.ConcatTable()
    seq_table_1 = nn.Sequential()
 
@@ -83,7 +83,12 @@ function M.setup(opt, checkpoint)
    concat_table_2:add(seq_3)
 
    model:add(concat_table_2)
-   model:add(nn.FlattenTable())
+   model:add(nn.FlattenTable())]]--
+
+   model:get(19):get(1):get(4):get(1):get(2):get(6):remove(3)
+   model:get(19):get(1):get(4):get(1):get(2):get(6):insert(nn.View(3965), 3)
+   model:get(19):get(1):get(4):get(1):get(2):get(6):remove(4)
+   model:get(19):get(1):get(4):get(1):get(2):get(6):insert(nn.Linear(3965, 128), 4)
 
 
    -- optnet is an general library for reducing memory usage in neural networks
@@ -154,7 +159,7 @@ function M.setup(opt, checkpoint)
       local BCE = nn.BCECriterion():cuda()
       local MSE_1 = nn.MSECriterion():cuda()
       local MSE_2 = nn.MSECriterion():cuda()
-      criterion = nn.ParallelCriterion2():add(SCE, 1):add(BCE, 0.1):add(MSE_1, 0.1):add(MSE_2, 0.1)
+      criterion = nn.ParallelCriterion2():add(SCE, 1):add(BCE, 0.1):add(MSE_1, 0.0):add(MSE_2, 0.0) -- set the coefficients of MSE_1 and MSE_2 to be 0.1 if you want to use the distillation loss
    end
    print('Model:\n' .. model:__tostring())
    return model, criterion

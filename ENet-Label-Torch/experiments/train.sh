@@ -7,7 +7,7 @@ CUDA_VISIBLE_DEVICES="0,1" th main.lua \
    -val ${data}/list/val_gt.txt \
    -dataset lane \
    -save experiments/models/${exp} \
-   -retrain experiments/models/${exp}/ENet_concat.t7 \
+   -retrain experiments/models/${exp}/ENet_concat_new.t7 \
    -shareGradInput true \
    -nThreads 2 \
    -nGPU 2 \

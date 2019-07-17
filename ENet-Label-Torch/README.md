@@ -16,7 +16,7 @@ Please follow [SCNN-Torch](https://github.com/XingangPan/SCNN) to put CULane in 
     ```Shell
     cd $ENet_ROOT/experiments/pretrained
     ```
-   Download [the trained model](https://drive.google.com/open?id=1qw7oYivOwy8AuQb3Z3cXO2wQ69bq4Myj) here.
+   Download [the trained model](https://drive.google.com/open?id=1pIMThIsGn8z8rIs6WgSNzom1H8WVvP5Q) here.
 
 2. Run test script
     ```Shell
@@ -39,14 +39,14 @@ Please follow [SCNN-Torch](https://github.com/XingangPan/SCNN) to put CULane in 
     sh Run.sh   # it may take over 30min to evaluate
     ```
     Note: `Run.sh` evaluate each scenario separately while `run.sh` evaluate the whole. You may use `calTotal.m` to calculate overall performance from all senarios.  
-    By now, you should be able to reproduce our result in the paper.
+    By now, you should be able to reproduce the result (F1-measure: 72.0).
     
 ### Training
 1. Download the pre-trained model
     ```Shell
     cd $ENet_ROOT/experiments/models
     ```
-   Download the pre-trained model [here](https://drive.google.com/open?id=1g5TyNyAlDkPzitpXWQCtZdeV4LAjqaSB) and move it to `$ENet_ROOT/experiments/models/vgg_SCNN_DULR_w9`.
+   Download the pre-trained model [here](https://drive.google.com/open?id=1Niz4tXMcxIacDIVRZo91AD8xkYIQ23rR) and move it to `$ENet_ROOT/experiments/models/vgg_SCNN_DULR_w9`.
 2. Training ENet-Label model
     ```Shell
     cd $ENet_ROOT

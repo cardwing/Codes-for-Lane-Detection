@@ -68,15 +68,15 @@ end
 function LaneDataset:preprocess_aug()
    if self.split == 'train' then
    return t.Compose{
-         t.RandomScaleRatio(760, 842, 274, 304),
+         t.RandomScaleRatio(936, 1018, 194, 224), -- 760, 842, 274, 304
          t.ColorNormalize(meanstd),
          t.Rotation(2),
          --t.RandomCrop(800, 288),
-         t.RandomCropLane(800, 288),
+         t.RandomCropLane(976, 208), -- 800, 288
       }
    elseif self.split == 'val' then
       return t.Compose{
-         t.ScaleWH(800, 288),
+         t.ScaleWH(976, 208), -- 800, 288
          t.ColorNormalize(meanstd),
       }
    else
