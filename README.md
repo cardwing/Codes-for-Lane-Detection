@@ -1,8 +1,10 @@
-Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Understanding"](https://arxiv.org/abs/1712.06080). (SCNN-Tensorflow) 
+Codes for "Learning Lightweight Lane Detection CNNs by Self Attention Distillation" (PDF coming soon!)
+
+This repo also contains Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Understanding"](https://arxiv.org/abs/1712.06080). (SCNN-Tensorflow) 
 
 # News
 
-1. ENet-Label-Torch has been released. 
+1. [ENet-Label-Torch](./ENet-Label-Torch) has been released. 
 
 Key features:
 
@@ -85,6 +87,7 @@ Note that path/to/CULane-dataset/ should contain files like [train_gt.txt](./SCN
 |:---:|:---:|:---:|:---:|
 |[SCNN-Torch](https://github.com/XingangPan/SCNN)|96.53%|0.0617|0.0180|
 |SCNN-Tensorflow|--|--|--|
+|ENet-Label-Torch|96.64%|0.0602|0.0205|
 
 The pre-trained model for testing is here. (coming soon!) Note that in TuSimple, SCNN-Torch is based on ResNet-101 while SCNN-Tensorflow is based on VGG-16. In CULane and BDD100K, both SCNN-Torch and SCNN-Tensorflow are based on VGG-16.
 
@@ -113,6 +116,7 @@ The pre-trained model for testing is [here](https://drive.google.com/open?id=1-E
 |:---:|:---:|:---:|
 |[SCNN-Torch](https://github.com/XingangPan/SCNN)|35.79%|15.84|
 |SCNN-Tensorflow|--|--|
+|ENet-Label-Torch|36.56%|16.02|
 
 The accuracy and IoU of lane pixels are computed. The pre-trained model for testing is here. (coming soon!)
 
@@ -149,5 +153,5 @@ If you have any problems in reproducing the results, just raise an issue in this
 
 ## To-Do List
 - [ ] Test SCNN-Tensorflow in TuSimple and BDD100K
-- [ ] Provide detailed instructions to run SCNN-Tensorflow in TuSimple and BDD100K
-- [ ] Upload our light-weight model (ENet-SAD) and its training & testing scripts
+- [x] Provide detailed instructions to run SCNN-Tensorflow in TuSimple and BDD100K
+- [x] Upload our light-weight model (ENet-SAD) and its training & testing scripts
