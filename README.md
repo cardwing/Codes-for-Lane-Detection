@@ -1,4 +1,4 @@
-Codes for "Learning Lightweight Lane Detection CNNs by Self Attention Distillation" (PDF coming soon!)
+Codes for ["Learning Lightweight Lane Detection CNNs by Self Attention Distillation"](https://arxiv.org/abs/1908.00821)
 
 This repo also contains Tensorflow implementation of ["Spatial As Deep: Spatial CNN for Traffic Scene Understanding"](https://arxiv.org/abs/1712.06080). (SCNN-Tensorflow) 
 
@@ -127,6 +127,13 @@ The accuracy and IoU of lane pixels are computed. The pre-trained model for test
 If you use the codes, please cite the following publications:
 
 ``` 
+@article{hou2019learning,
+  title={Learning Lightweight Lane Detection CNNs by Self Attention Distillation},
+  author={Hou, Yuenan and Ma, Zheng and Liu, Chunxiao and Loy, Chen Change},
+  journal={arXiv preprint arXiv:1908.00821},
+  year={2019}
+}
+
 @inproceedings{pan2018SCNN,  
   author = {Xingang Pan, Jianping Shi, Ping Luo, Xiaogang Wang, and Xiaoou Tang},  
   title = {Spatial As Deep: Spatial CNN for Traffic Scene Understanding},  
