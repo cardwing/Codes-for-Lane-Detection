@@ -1,6 +1,6 @@
 ### Before Start
 
-Please follow [SCNN-Torch](https://github.com/XingangPan/SCNN) to put the TuSimple dataset (train, val, test) in the desired folder. We'll call the directory that you cloned ENet-TuSimple-Torch as `$ENet_TuSimple_ROOT`. Note that if you use ENet-Label-Torch (i.e., ENet-SAD) as the backbone, you can get around 97% accuracy in TuSimple testing set.
+Please follow [list6](./list6) and [list](./list) to put the TuSimple dataset (train, val, test) in the desired folder. We'll call the directory that you cloned ENet-TuSimple-Torch as `$ENet_TuSimple_ROOT`. Note that if you use ENet-Label-Torch (i.e., ENet-SAD) as the backbone, you can get around **96.64%** accuracy in TuSimple testing set.
 
 ### Testing
 1. Run test script
