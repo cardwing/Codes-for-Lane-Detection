@@ -4,13 +4,13 @@ This repo also contains Tensorflow implementation of ["Spatial As Deep: Spatial 
 
 # News
 
-1. [ENet-Label-Torch](./ENet-Label-Torch) has been released. 
+1. [ENet-Label-Torch](./ENet-Label-Torch) and [ENet-TuSimple-Torch](./ENet-TuSimple-Torch) have been released. 
 
 Key features:
 
 (1) ENet-label is a **light-weight** lane detection model based on [ENet](https://arxiv.org/abs/1606.02147) and adopts **self attention distillation** (more details can be found in our paper). 
 
-(2) It has **20** × fewer parameters and runs **10** × faster compared to the state-of-the-art SCNN, and achieves **72.0** (F1-measure) on CULane testing set (better than SCNN which achieves 71.6). 
+(2) It has **20** × fewer parameters and runs **10** × faster compared to the state-of-the-art SCNN, and achieves **72.0** (F1-measure) on CULane testing set (better than SCNN which achieves 71.6). It also achieves around 97% accuracy in TuSimple testing set (better than SCNN which achieves 96.53%). 
 
 (Do not hesitate to try our model!!!)
 
