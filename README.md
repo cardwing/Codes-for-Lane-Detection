@@ -4,7 +4,7 @@ This repo also contains Tensorflow implementation of ["Spatial As Deep: Spatial 
 
 # News
 
-1. [ENet-Label-Torch](./ENet-Label-Torch) [ENet-TuSimple-Torch](./ENet-TuSimple-Torch) and [ENet-BDD100K-Torch](./ENet-BDD100K-Torch) have been released. 
+1. [ENet-Label-Torch](./ENet-Label-Torch), [ENet-TuSimple-Torch](./ENet-TuSimple-Torch) and [ENet-BDD100K-Torch](./ENet-BDD100K-Torch) have been released. 
 
 Key features:
 
@@ -160,6 +160,5 @@ If you have any problems in reproducing the results, just raise an issue in this
 
 ## To-Do List
 - [ ] Test SCNN-Tensorflow in TuSimple and BDD100K
-- [ ] Upload scripts to process BDD100K data
 - [x] Provide detailed instructions to run SCNN-Tensorflow in TuSimple and BDD100K
 - [x] Upload our light-weight model (ENet-SAD) and its training & testing scripts
