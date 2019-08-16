@@ -12,7 +12,7 @@ Key features:
 
 (2) It has **20** × fewer parameters and runs **10** × faster compared to the state-of-the-art SCNN, and achieves **72.0** (F1-measure) on CULane testing set (better than SCNN which achieves 71.6). It also achieves **96.64%** accuracy in TuSimple testing set (better than SCNN which achieves 96.53%) and **36.56%** accuracy in BDD100K testing set (better than SCNN which achieves 35.79%). 
 
-(3) Applying ENet-SAD to LLAMAS dataset yields **0.635** mAP in the multi-class lane marker segmentation task, which is much better than the baseline algorithm which achieves 0.500 mAP. Details can be found in [this repo](https://github.com/cardwing/unsupervised_llamas/tree/master/ENet-SAD-Simple).
+(3) Applying ENet-SAD to [LLAMAS](https://unsupervised-llamas.com/llamas/) dataset yields **0.635** mAP in the [multi-class lane marker segmentation task](https://unsupervised-llamas.com/llamas/benchmark_multi), which is much better than the baseline algorithm which achieves 0.500 mAP. Details can be found in [this repo](https://github.com/cardwing/unsupervised_llamas/tree/master/ENet-SAD-Simple).
 
 (Do not hesitate to try our model!!!)
 
