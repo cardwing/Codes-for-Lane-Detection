@@ -13,7 +13,7 @@ Please follow [list](./list) to put CULane in the desired folder. We'll call the
     ```Shell
     cd $ERFNet_ROOT/trained
     ```
-   Download the trained model (coming soon) here.
+   The trained model has already been there.
 
 2. Run test script
     ```Shell
@@ -36,14 +36,14 @@ Please follow [list](./list) to put CULane in the desired folder. We'll call the
     sh Run.sh   # it may take over 30min to evaluate
     ```
     Note: `Run.sh` evaluate each scenario separately while `run.sh` evaluate the whole. You may use `calTotal.m` to calculate overall performance from all senarios.  
-    By now, you should be able to reproduce the result (F1-measure: xx.x).
+    By now, you should be able to reproduce the result (F1-measure: 73.1).
     
 ### Training
 1. Download the pre-trained model
     ```Shell
     cd $ERFNet_ROOT/pretrained
     ```
-   Download the pre-trained model [here](https://drive.google.com/open?id=1GotOSfk0PmVWKwVJaku5NnllsUwXDREY) and move it to `$ERFNet_ROOT/pretrained`.
+   The pre-trained model has already been there.
 2. Training ERFNet model
     ```Shell
     cd $ERFNet_ROOT

@@ -4,7 +4,7 @@ This repo also contains Tensorflow implementation of ["Spatial As Deep: Spatial 
 
 # News
 
-1. [ERFNet-CULane-PyTorch] has been released. (It can achieve **72.3** F1-measure in CULane testing set)
+1. [ERFNet-CULane-PyTorch](./ERFNet-CULane-PyTorch) has been released. (It can achieve **73.1** F1-measure in CULane testing set)
 
 2. [ENet-Label-Torch](./ENet-Label-Torch), [ENet-TuSimple-Torch](./ENet-TuSimple-Torch) and [ENet-BDD100K-Torch](./ENet-BDD100K-Torch) have been released. 
 
@@ -97,20 +97,20 @@ The pre-trained model for testing is here. (coming soon!) Note that in TuSimple,
 
 2. CULane testing set (F1-measure):
 
-|Category|[SCNN-Torch](https://github.com/XingangPan/SCNN)|SCNN-Tensorflow|ENet-Label-Torch|
-|:---:|:---:|:---:|:---:|
-|Normal|90.6|90.2|**90.7**|
-|Crowded|69.7|71.9|70.8|
-|Night|66.1|64.6|65.9|
-|No line|43.4|45.8|44.7|
-|Shadow|66.9|73.8|70.6|
-|Arrow|84.1|83.8|**85.8**|
-|Dazzle light|58.5|59.5|**64.4**|
-|Curve|64.4|63.4|**65.4**|
-|Crossroad|1990|4137|2729|
-|Total|71.6|71.3|**72.0**|
-|Runtime(ms)|133.5|--|**13.4**|
-|Parameter(M)|20.72|--|**0.98**|
+|Category|[SCNN-Torch](https://github.com/XingangPan/SCNN)|SCNN-Tensorflow|ENet-Label-Torch|ERFNet-CULane-PyTorch|
+|:---:|:---:|:---:|:---:|:---:|
+|Normal|90.6|90.2|90.7|**91.5**|
+|Crowded|69.7|71.9|70.8|71.6|
+|Night|66.1|64.6|65.9|**67.1**|
+|No line|43.4|45.8|44.7|45.1|
+|Shadow|66.9|73.8|70.6|71.3|
+|Arrow|84.1|83.8|85.8|**87.2**|
+|Dazzle light|58.5|59.5|64.4|**66.0**|
+|Curve|64.4|63.4|65.4|**66.3**|
+|Crossroad|1990|4137|2729|2199|
+|Total|71.6|71.3|72.0|**73.1**|
+|Runtime(ms)|133.5|--|13.4|**10.2**|
+|Parameter(M)|20.72|--|**0.98**|2.49|
 
 The pre-trained model for testing is [here](https://drive.google.com/open?id=1-E0Bws7-v35vOVfqEXDTJdfovUTQ2sf5). Note that you need to exchange the order of VGG-MEAN in test_lanenet.py and change the order of input images from RGB to BGR since the pre-trained model uses opencv to read images. You can further boost the performance by referring to [this issue](https://github.com/cardwing/Codes-for-Lane-Detection/issues/5).
 
