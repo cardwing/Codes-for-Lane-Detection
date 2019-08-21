@@ -4,7 +4,9 @@ This repo also contains Tensorflow implementation of ["Spatial As Deep: Spatial 
 
 # News
 
-1. [ENet-Label-Torch](./ENet-Label-Torch), [ENet-TuSimple-Torch](./ENet-TuSimple-Torch) and [ENet-BDD100K-Torch](./ENet-BDD100K-Torch) have been released. 
+1. [ERFNet-CULane-PyTorch] has been released. (It can achieve **72.3** F1-measure in CULane testing set)
+
+2. [ENet-Label-Torch](./ENet-Label-Torch), [ENet-TuSimple-Torch](./ENet-TuSimple-Torch) and [ENet-BDD100K-Torch](./ENet-BDD100K-Torch) have been released. 
 
 Key features:
 
@@ -16,7 +18,7 @@ Key features:
 
 (Do not hesitate to try our model!!!)
 
-2. Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
+3. Multi-GPU training has been supported. Just change BATCH_SIZE and GPU_NUM in global_config.py, and then use `CUDA_VISIBLE_DEVICES="0,1,2,3" python file_name.py`. Thanks @ yujincheng08.
 
 # Content
 
