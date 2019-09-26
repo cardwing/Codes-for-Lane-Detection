@@ -130,12 +130,20 @@ int main(int argc, char **argv)
 	
 	vector<int> anno_match;
 	string sub_im_name;
-	int count = 0;
-	while(getline(ifs_im_list, sub_im_name))
+  // pre-load filelist
+  vector<string> filelists;
+  while (getline(ifs_im_list, sub_im_name)) {
+    filelists.push_back(sub_im_name);
+  }
+  ifs_im_list.close();
+
+  vector<tuple<vector<int>, long, long, long, long>> tuple_lists;
+  tuple_lists.resize(filelists.size());
+
+#pragma omp parallel for
+	for (size_t i = 0; i < filelists.size(); i++)
 	{
-		count++;
-		if (count < frame)
-			continue;
+		auto sub_im_name = filelists[i];
 		string full_im_name = im_dir + sub_im_name;
 		string sub_txt_name =  sub_im_name.substr(0, sub_im_name.find_last_of(".")) + ".lines.txt";
 		string anno_file_name = anno_dir + sub_txt_name;
@@ -145,14 +153,25 @@ int main(int argc, char **argv)
 		read_lane_file(anno_file_name, anno_lanes);
 		read_lane_file(detect_file_name, detect_lanes);
 		//cerr<<count<<": "<<full_im_name<<endl;
-		anno_match = counter.count_im_pair(anno_lanes, detect_lanes);
+		tuple_lists[i] = counter.count_im_pair(anno_lanes, detect_lanes);
 		if (show)
 		{
+			auto anno_match = get<0>(tuple_lists[i]);
 			visualize(full_im_name, anno_lanes, detect_lanes, anno_match, width_lane);
 			waitKey(0);
 		}
 	}
-	ifs_im_list.close();
+
+	long tp = 0, fp = 0, tn = 0, fn = 0;
+  for (auto result: tuple_lists) {
+    tp += get<1>(result);
+    fp += get<2>(result);
+    // tn = get<3>(result);
+    fn += get<4>(result);
+  }
+	counter.setTP(tp);
+	counter.setFP(fp);
+	counter.setFN(fn);
 	
 	double precision = counter.get_precision();
 	double recall = counter.get_recall();

@@ -5,6 +5,7 @@
 #include "hungarianGraph.hpp"
 #include <iostream>
 #include <algorithm>
+#include <tuple>
 #include <vector>
 #include <opencv2/core/core.hpp>
 
@@ -26,9 +27,12 @@ class Counter
 		long getTP(void);
 		long getFP(void);
 		long getFN(void);
+		void setTP(long);
+		void setFP(long);
+		void setFN(long);
 		// direct add tp, fp, tn and fn
 		// first match with hungarian
-		vector<int> count_im_pair(const vector<vector<Point2f> > &anno_lanes, const vector<vector<Point2f> > &detect_lanes);
+		tuple<vector<int>, long, long, long, long> count_im_pair(const vector<vector<Point2f> > &anno_lanes, const vector<vector<Point2f> > &detect_lanes);
 		void makeMatch(const vector<vector<double> > &similarity, vector<int> &match1, vector<int> &match2);
 
 	private:
