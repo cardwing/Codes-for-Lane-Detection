@@ -43,20 +43,33 @@ long Counter::getFN(void)
 	return fn;
 }
 
-vector<int> Counter::count_im_pair(const vector<vector<Point2f> > &anno_lanes, const vector<vector<Point2f> > &detect_lanes)
+void Counter::setTP(long value) 
+{
+	tp = value;
+}
+
+void Counter::setFP(long value)
+{
+  fp = value;
+}
+
+void Counter::setFN(long value)
+{
+	fn = value;
+}
+
+tuple<vector<int>, long, long, long, long> Counter::count_im_pair(const vector<vector<Point2f> > &anno_lanes, const vector<vector<Point2f> > &detect_lanes)
 {
 	vector<int> anno_match(anno_lanes.size(), -1);
 	vector<int> detect_match;
 	if(anno_lanes.empty())
 	{
-		fp += detect_lanes.size();
-		return anno_match;
+		return make_tuple(anno_match, 0, detect_lanes.size(), 0, 0);
 	}
 
 	if(detect_lanes.empty())
 	{
-		fn += anno_lanes.size();
-		return anno_match;
+		return make_tuple(anno_match, 0, 0, 0, anno_lanes.size());
 	}
 	// hungarian match first
 	
@@ -92,10 +105,7 @@ vector<int> Counter::count_im_pair(const vector<vector<Point2f> > &anno_lanes, c
 	}
 	int curr_fn = anno_lanes.size() - curr_tp;
 	int curr_fp = detect_lanes.size() - curr_tp;
-	tp += curr_tp;
-	fn += curr_fn;
-	fp += curr_fp;
-	return anno_match;
+	return make_tuple(anno_match, curr_tp, curr_fp, 0, curr_fn);
 }
 
 
