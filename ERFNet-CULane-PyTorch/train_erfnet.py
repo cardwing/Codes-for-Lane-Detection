@@ -10,7 +10,6 @@ import cv2
 import utils.transforms as tf
 import numpy as np
 import models
-from models import sync_bn
 import dataset as ds
 from options.options import parser
 
@@ -24,19 +23,16 @@ def main():
     os.environ["CUDA_VISIBLE_DEVICES"] = ','.join(str(gpu) for gpu in args.gpus)
     args.gpus = len(args.gpus)
 
-    if args.no_partialbn:
-        sync_bn.Synchronize.init(args.gpus)
-
     if args.dataset == 'VOCAug' or args.dataset == 'VOC2012' or args.dataset == 'COCO':
         num_class = 21
         ignore_label = 255
         scale_series = [10, 20, 30, 60]
     elif args.dataset == 'Cityscapes':
         num_class = 19
-        ignore_label = 255 # 0
+        ignore_label = 255  # 0
         scale_series = [15, 30, 45, 90]
     elif args.dataset == 'ApolloScape':
-        num_class = 37 # merge the noise and ignore labels
+        num_class = 37  # merge the noise and ignore labels
         ignore_label = 255
     elif args.dataset == 'CULane':
         num_class = 5
@@ -44,12 +40,12 @@ def main():
     else:
         raise ValueError('Unknown dataset ' + args.dataset)
 
-    model = models.ERFNet(num_class, partial_bn=not args.no_partialbn)
+    model = models.ERFNet(num_class)
     input_mean = model.input_mean
     input_std = model.input_std
     model = torch.nn.DataParallel(model, device_ids=range(args.gpus)).cuda()
 
-    def load_my_state_dict(model, state_dict):  #custom function to load model when not all dict elements
+    def load_my_state_dict(model, state_dict):  # custom function to load model when not all dict elements
         own_state = model.state_dict()
         ckpt_name = []
         cnt = 0
@@ -97,7 +93,7 @@ def main():
     weights[0] = 0.4
     class_weights = torch.FloatTensor(weights).cuda()
     criterion = torch.nn.NLLLoss(ignore_index=ignore_label, weight=class_weights).cuda()
-    criterion_exist = torch.nn.BCELoss().cuda() 
+    criterion_exist = torch.nn.BCEWithLogitsLoss().cuda()
     optimizer = torch.optim.SGD(model.parameters(), args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
     evaluator = EvalSegmentation(num_class, ignore_label)
 
@@ -107,7 +103,7 @@ def main():
         validate(val_loader, model, criterion, 0, evaluator)
         return
 
-    for epoch in range(args.epochs): # args.start_epoch
+    for epoch in range(args.epochs):  # args.start_epoch
         adjust_learning_rate(optimizer, epoch, args.lr_steps)
 
         # train for one epoch
@@ -128,17 +124,10 @@ def main():
 
 
 def train(train_loader, model, criterion, criterion_exist, optimizer, epoch):
-
     batch_time = AverageMeter()
     data_time = AverageMeter()
     losses = AverageMeter()
     losses_exist = AverageMeter()
-
-    if args.no_partialbn:
-        model.module.partialBN(False)
-        sync_bn.convert_bn(model)
-    else:
-        model.module.partialBN(True)
 
     # switch to train mode
     model.train()
@@ -148,22 +137,22 @@ def train(train_loader, model, criterion, criterion_exist, optimizer, epoch):
         # measure data loading time
         data_time.update(time.time() - end)
 
-        target = target.cuda(async=True)
-        target_exist = target_exist.float().cuda(async=True)
+        target = target.cuda()
+        target_exist = target_exist.float().cuda()
         input_var = torch.autograd.Variable(input)
         target_var = torch.autograd.Variable(target)
         target_exist_var = torch.autograd.Variable(target_exist)
 
         # compute output
-        output, output_exist = model(input_var) # output_mid
+        output, output_exist = model(input_var)  # output_mid
         loss = criterion(torch.nn.functional.log_softmax(output, dim=1), target_var)
         # print(output_exist.data.cpu().numpy().shape)
         loss_exist = criterion_exist(output_exist, target_exist_var)
         loss_tot = loss + loss_exist * 0.1
 
         # measure accuracy and record loss
-        losses.update(loss.data[0], input.size(0))
-        losses_exist.update(loss_exist.data[0], input.size(0))
+        losses.update(loss.data.item(), input.size(0))
+        losses_exist.update(loss_exist.item(), input.size(0))
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
@@ -175,7 +164,10 @@ def train(train_loader, model, criterion, criterion_exist, optimizer, epoch):
         end = time.time()
 
         if (i + 1) % args.print_freq == 0:
-            print(('Epoch: [{0}][{1}/{2}], lr: {lr:.5f}\t' 'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t' 'Data {data_time.val:.3f} ({data_time.avg:.3f})\t' 'Loss {loss.val:.4f} ({loss.avg:.4f})\t' 'Loss_exist {loss_exist.val:.4f} ({loss_exist.avg:.4f})\t'.format(epoch, i, len(train_loader), batch_time=batch_time, data_time=data_time, loss=losses, loss_exist=losses_exist, lr=optimizer.param_groups[-1]['lr'])))
+            print((
+                      'Epoch: [{0}][{1}/{2}], lr: {lr:.5f}\t' 'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t' 'Data {data_time.val:.3f} ({data_time.avg:.3f})\t' 'Loss {loss.val:.4f} ({loss.avg:.4f})\t' 'Loss_exist {loss_exist.val:.4f} ({loss_exist.avg:.4f})\t'.format(
+                          epoch, i, len(train_loader), batch_time=batch_time, data_time=data_time, loss=losses,
+                          loss_exist=losses_exist, lr=optimizer.param_groups[-1]['lr'])))
             batch_time.reset()
             data_time.reset()
             losses.reset()
@@ -185,12 +177,12 @@ def flip(x, dim):
     xsize = x.size()
     dim = x.dim() + dim if dim < 0 else dim
     x = x.view(-1, *xsize[dim:])
-    x = x.view(x.size(0), x.size(1), -1)[:, getattr(torch.arange(x.size(1) - 1, -1, -1), ('cpu', 'cuda')[x.is_cuda])().long(), :]
+    x = x.view(x.size(0), x.size(1), -1)[:,
+        getattr(torch.arange(x.size(1) - 1, -1, -1), ('cpu', 'cuda')[x.is_cuda])().long(), :]
     return x.view(xsize)
 
 
 def validate(val_loader, model, criterion, iter, evaluator, logger=None):
-
     batch_time = AverageMeter()
     losses = AverageMeter()
     IoU = AverageMeter()
@@ -200,7 +192,7 @@ def validate(val_loader, model, criterion, iter, evaluator, logger=None):
 
     end = time.time()
     for i, (input, target, target_exist) in enumerate(val_loader):
-        target = target.cuda(async=True)
+        target = target.cuda()
         input_var = torch.autograd.Variable(input, volatile=True)
         target_var = torch.autograd.Variable(target)
 
@@ -213,7 +205,7 @@ def validate(val_loader, model, criterion, iter, evaluator, logger=None):
         pred = output.data.cpu().numpy().transpose(0, 2, 3, 1)
         pred = np.argmax(pred, axis=3).astype(np.uint8)
         IoU.update(evaluator(pred, target.cpu().numpy()))
-        losses.update(loss.data[0], input.size(0))
+        losses.update(loss.data.item(), input.size(0))
 
         # measure elapsed time
         batch_time.update(time.time() - end)
@@ -279,7 +271,7 @@ class EvalSegmentation(object):
         pred = pred.flatten().astype(int)
         locs = (gt != self.ignore_label)
         sumim = gt + pred * self.num_class
-        hs = np.bincount(sumim[locs], minlength=self.num_class**2).reshape(self.num_class, self.num_class)
+        hs = np.bincount(sumim[locs], minlength=self.num_class ** 2).reshape(self.num_class, self.num_class)
         return hs
 
 
