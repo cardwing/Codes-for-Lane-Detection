@@ -2,5 +2,5 @@ easydict==1.6
 matplotlib==2.0.2
 glog==0.3.1
 opencv_python==3.2.0.7
-numpy==1.13.1
+numpy==1.21.0
 scikit_learn==0.19.1
